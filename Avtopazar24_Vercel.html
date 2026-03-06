@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avtopazar24 — Find Your Perfect Vehicle</title>
+<meta name="description" content="The largest vehicle marketplace in Macedonia. Browse 10,000+ car listings from verified sellers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET & VARIABLES ─── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --gold: #F5C518;
+  --gold-d: #d4a900;
+  --gold-light: #fffdf0;
+  --charcoal: #1d2432;
+  --white: #ffffff;
+  --off: #f7f7f8;
+  --bg-sep: #f0f1f4;
+  --border: #e8e8ec;
+  --text: #111218;
+  --mid: #6b7280;
+  --light: #9ca3af;
+  --danger: #dc2626;
+  --success: #16a34a;
+  --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --radius-card: 14px;
+  --radius-input: 10px;
+  --radius-btn: 12px;
+}
+html { font-family: var(--font); color: var(--text); background: var(--bg-sep); -webkit-font-smoothing: antialiased; }
+*, button, select, input, textarea { font-family: var(--font); }
+input, select, textarea { outline: none; }
+input:focus, select:focus, textarea:focus {
+  background: white !important;
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 3px rgba(245,197,24,0.18);
+}
+button { cursor: pointer; border: none; }
+a { text-decoration: none; color: inherit; }
+* { -webkit-tap-highlight-color: transparent; }
+
+/* ─── APP SHELL ─── */
+#app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: var(--bg-sep); position: relative; }
+
+/* ─── TOP NAV ─── */
+.topnav {
+  background: var(--white); border-bottom: 1px solid var(--border);
+  padding: 18px 16px 12px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.nav-logo {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--gold); color: var(--charcoal);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 900;
+}
+.nav-post {
+  background: var(--gold); color: var(--charcoal); border: none;
+  border-radius: 20px; padding: 8px 16px;
+  font-size: 13px; font-weight: 700;
+  display: flex; align-items: center; gap: 5px;
+  transition: background .15s;
+}
+.nav-post:hover { background: var(--gold-d); }
+.nav-hamburger {
+  display: flex; flex-direction: column; gap: 4px; padding: 4px; background: none; border: none;
+}
+.nav-hamburger span { display: block; width: 18px; height: 2px; background: var(--text); border-radius: 2px; }
+
+/* ─── BACK BAR ─── */
+.back-bar {
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 16px; font-size: 13px; font-weight: 600; color: var(--mid);
+  background: var(--white); border-bottom: 1px solid var(--border); cursor: pointer;
+  transition: color .15s;
+}
+.back-bar:hover { color: var(--text); }
+.back-bar .chevron { font-size: 18px; line-height: 1; }
+
+/* ─── PAGE ROUTING ─── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ══════════════════════════════
+   HOMEPAGE
+══════════════════════════════ */
+.search-hero { background: var(--charcoal); padding: 20px 16px; }
+.sh-title { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -.5px; margin-bottom: 4px; }
+.sh-sub { font-size: 13px; color: rgba(255,255,255,.45); margin-bottom: 18px; }
+.sh-form { display: flex; flex-direction: column; gap: 10px; }
+.sh-input, .sh-select {
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--radius-input); padding: 12px 14px; font-size: 14px;
+  color: rgba(255,255,255,.6); width: 100%;
+}
+.sh-select { appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center; background-color: rgba(255,255,255,.08);
+}
+.sh-select option { background: var(--charcoal); color: white; }
+.sh-input::placeholder { color: rgba(255,255,255,.35); }
+.sh-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.sh-btn {
+  background: var(--gold); color: var(--charcoal); border: none;
+  border-radius: var(--radius-btn); padding: 14px;
+  font-size: 15px; font-weight: 800; width: 100%;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background .15s;
+}
+.sh-btn:hover { background: var(--gold-d); }
+
+.stats-bar { display: grid; grid-template-columns: repeat(4,1fr); background: #fff; border-bottom: 1px solid var(--border); }
+.stat-cell { padding: 14px 8px; text-align: center; border-right: 1px solid var(--border); }
+.stat-cell:last-child { border-right: none; }
+.stat-n { font-size: 18px; font-weight: 800; letter-spacing: -.5px; color: var(--charcoal); }
+.stat-l { font-size: 10px; color: var(--light); margin-top: 1px; font-weight: 500; }
+
+.section-header { padding: 18px 16px 12px; display: flex; justify-content: space-between; align-items: flex-end; }
+.section-title { font-size: 18px; font-weight: 800; letter-spacing: -.4px; }
+.section-sub { font-size: 12px; color: var(--mid); margin-top: 2px; }
+.see-all { font-size: 13px; font-weight: 700; color: var(--gold-d); }
+
+/* Car card */
+.car-card {
+  background: #fff; border-radius: var(--radius-card); overflow: hidden;
+  border: 1px solid var(--border); margin: 0 16px 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05); cursor: pointer; transition: all .2s;
+}
+.car-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.1); transform: translateY(-1px); }
+.car-photo { width: 100%; height: 190px; position: relative; overflow: hidden; background: #1a1a2e; }
+.car-photo img, .car-photo svg { width: 100%; height: 100%; object-fit: cover; display: block; }
+.feat-badge {
+  position: absolute; top: 10px; left: 10px;
+  background: var(--gold); color: var(--charcoal);
+  font-size: 10px; font-weight: 800; letter-spacing: .05em;
+  padding: 4px 10px; border-radius: 100px; text-transform: uppercase; pointer-events: none;
+}
+.photo-count {
+  position: absolute; bottom: 10px; right: 10px;
+  background: rgba(0,0,0,.55); backdrop-filter: blur(6px);
+  color: #fff; font-size: 11px; font-weight: 600;
+  padding: 3px 8px; border-radius: 6px; pointer-events: none;
+}
+.heart-btn {
+  position: absolute; top: 10px; right: 10px;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,255,255,.9); color: var(--mid); border: none;
+  display: flex; align-items: center; justify-content: center; font-size: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15); transition: all .2s; z-index: 2;
+}
+.heart-btn.on { color: #ef4444; background: #fff; }
+.car-body { padding: 12px 14px 14px; }
+.car-name { font-size: 15px; font-weight: 700; letter-spacing: -.3px; margin-bottom: 4px; }
+.car-price { font-size: 22px; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
+.car-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 0; margin-bottom: 8px; }
+.car-spec { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--mid); }
+.car-spec strong { color: var(--text); font-weight: 600; }
+.car-location { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--light); }
+
+/* Why section */
+.why-section { background: var(--off); padding: 24px 16px; }
+.why-title { font-size: 20px; font-weight: 800; letter-spacing: -.4px; margin-bottom: 4px; }
+.why-sub { font-size: 13px; color: var(--mid); margin-bottom: 18px; }
+.why-items { display: flex; flex-direction: column; gap: 12px; }
+.why-item {
+  background: #fff; border-radius: 12px; border: 1px solid var(--border);
+  padding: 14px 16px; display: flex; align-items: flex-start; gap: 14px;
+}
+.why-icon {
+  width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
+  background: rgba(245,197,24,.1); border: 1.5px solid rgba(245,197,24,.3);
+  display: flex; align-items: center; justify-content: center; font-size: 20px;
+}
+.why-label { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+.why-desc { font-size: 12px; color: var(--mid); line-height: 1.5; }
+
+/* CTA banner */
+.cta-banner { background: var(--charcoal); border-radius: 16px; padding: 24px; margin: 0 16px 20px; text-align: center; }
+.cta-banner h3 { font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -.4px; margin-bottom: 6px; }
+.cta-banner p { font-size: 13px; color: rgba(255,255,255,.5); margin-bottom: 16px; line-height: 1.5; }
+.cta-banner button { background: var(--gold); color: var(--charcoal); border: none; border-radius: 10px; padding: 12px 24px; font-size: 14px; font-weight: 800; width: 100%; transition: background .15s; }
+.cta-banner button:hover { background: var(--gold-d); }
+
+/* Footer */
+.site-footer { background: var(--charcoal); padding: 28px 16px 20px; }
+.footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+.footer-logo-icon { width: 34px; height: 34px; border-radius: 10px; background: var(--gold); color: var(--charcoal); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; }
+.footer-logo-text { font-size: 16px; font-weight: 800; color: #fff; }
+.footer-tag { font-size: 12px; color: rgba(255,255,255,.4); margin-bottom: 20px; }
+.footer-col-title { font-size: 12px; font-weight: 700; color: rgba(255,255,255,.7); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+.footer-links li { font-size: 13px; color: rgba(255,255,255,.45); cursor: pointer; }
+.footer-links li:hover { color: var(--gold); }
+.footer-contact { font-size: 12px; color: rgba(255,255,255,.45); margin-bottom: 7px; }
+.footer-socials { display: flex; gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.08); }
+.footer-social { width: 34px; height: 34px; border-radius: 8px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; font-size: 14px; color: rgba(255,255,255,.5); cursor: pointer; }
+.footer-bottom { text-align: center; font-size: 11px; color: rgba(255,255,255,.2); margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.07); }
+
+/* ══════════════════════════════
+   CAR DETAIL
+══════════════════════════════ */
+.detail-gallery { background: #0d0f18; }
+.detail-main { width: 100%; height: 230px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.detail-main svg { width: 100%; height: 100%; }
+.gallery-count { position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,.55); backdrop-filter: blur(6px); color: #fff; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 7px; pointer-events: none; }
+.gallery-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 100%; display: flex; justify-content: space-between; padding: 0 10px; }
+.gnav { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.85); backdrop-filter: blur(4px); border: none; font-size: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,.15); transition: background .15s; }
+.gnav:hover { background: var(--gold); }
+.thumbstrip { display: flex; gap: 8px; padding: 10px 14px; background: #fff; border-bottom: 1px solid var(--border); overflow-x: auto; }
+.thumb { width: 74px; height: 54px; flex-shrink: 0; border-radius: 9px; border: 2px solid transparent; cursor: pointer; overflow: hidden; background: var(--off); transition: border-color .15s; }
+.thumb.on { border-color: var(--gold); }
+.thumb:not(.on) { opacity: .55; }
+.thumb:hover { opacity: 1; }
+.thumb svg { width: 74px; height: 54px; display: block; }
+.detail-title { background: #fff; padding: 16px; border-bottom: 1px solid var(--border); }
+.detail-badges { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.d-feat { background: var(--gold); color: var(--charcoal); font-size: 10px; font-weight: 800; letter-spacing: .05em; padding: 3px 9px; border-radius: 100px; text-transform: uppercase; }
+.d-loc, .d-time { font-size: 12px; color: var(--mid); }
+.d-name { font-size: 22px; font-weight: 800; letter-spacing: -.6px; margin-bottom: 8px; }
+.d-price { font-size: 28px; font-weight: 900; letter-spacing: -1px; }
+.quick-specs { display: grid; grid-template-columns: 1fr 1fr; background: var(--border); gap: 1px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.qs { background: #fff; padding: 14px 16px; display: flex; align-items: center; gap: 10px; }
+.qs-icon { font-size: 18px; }
+.qs-l { font-size: 11px; color: var(--light); font-weight: 500; margin-bottom: 2px; }
+.qs-v { font-size: 14px; font-weight: 700; }
+.d-section { background: #fff; padding: 18px 16px; border-bottom: 1px solid var(--border); }
+.d-section-title { font-size: 16px; font-weight: 800; letter-spacing: -.3px; margin-bottom: 12px; }
+.d-desc { font-size: 14px; line-height: 1.7; color: #374151; }
+.equip-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.equip-item { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+.equip-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+.specs-table { width: 100%; border-collapse: collapse; }
+.specs-table tr { border-bottom: 1px solid var(--border); }
+.specs-table tr:last-child { border-bottom: none; }
+.specs-table tr:nth-child(even) { background: var(--off); }
+.specs-table td { padding: 11px 0; font-size: 14px; }
+.specs-table td:first-child { color: var(--mid); font-weight: 500; width: 45%; }
+.specs-table td:last-child { font-weight: 700; }
+.contact-seller { background: #fff; }
+.cs-header { padding: 18px 16px 10px; font-size: 16px; font-weight: 800; letter-spacing: -.3px; }
+.cs-vendor { padding: 0 16px 14px; display: flex; align-items: center; gap: 12px; }
+.cs-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--charcoal); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; flex-shrink: 0; border: 2px solid var(--gold); }
+.cs-name { font-size: 15px; font-weight: 800; margin-bottom: 2px; }
+.cs-since { font-size: 12px; color: var(--light); }
+.cs-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 16px 14px; }
+.cs-stat { background: var(--off); border-radius: 10px; padding: 12px 14px; }
+.cs-stat-n { font-size: 20px; font-weight: 900; letter-spacing: -.5px; margin-bottom: 1px; }
+.cs-stat-l { font-size: 11px; color: var(--light); font-weight: 500; }
+.cs-location { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--mid); padding: 0 16px 16px; }
+.cs-actions { padding: 0 16px 16px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--border); }
+.cs-primary { background: var(--gold); color: var(--charcoal); border: none; border-radius: var(--radius-btn); padding: 14px; font-size: 15px; font-weight: 800; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background .15s; }
+.cs-primary:hover { background: var(--gold-d); }
+.cs-secondary { background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius-btn); padding: 13px; font-size: 14px; font-weight: 700; color: var(--text); width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all .15s; }
+.cs-secondary:hover { border-color: var(--charcoal); background: var(--off); }
+.cs-share { text-align: center; font-size: 13px; font-weight: 600; color: var(--mid); padding: 6px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; }
+
+/* ══════════════════════════════
+   PUBLISH CAR
+══════════════════════════════ */
+.pub-header { background: #fff; padding: 16px 16px 18px; border-bottom: 1px solid var(--border); }
+.pub-title { font-size: 22px; font-weight: 800; letter-spacing: -.6px; margin-bottom: 3px; }
+.pub-sub { font-size: 13px; color: var(--mid); }
+.pub-step { background: #fff; margin-bottom: 8px; padding: 18px 16px; }
+.pub-step-title {
+  font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--charcoal); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.step-num {
+  width: 22px; height: 22px; border-radius: 50%; background: var(--gold); color: var(--charcoal);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 900; flex-shrink: 0;
+}
+.pub-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 13px; }
+.pub-field:last-child { margin-bottom: 0; }
+.pub-label { font-size: 12px; font-weight: 700; color: #374151; }
+.pub-label .req { color: var(--danger); }
+.pub-input, .pub-select, .pub-textarea {
+  background: var(--off); border: 1.5px solid var(--border);
+  border-radius: var(--radius-input); padding: 12px 14px; font-size: 14px;
+  color: var(--text); width: 100%; transition: all .2s;
+}
+.pub-select { appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center; background-color: var(--off);
+}
+.pub-textarea { height: 100px; resize: none; line-height: 1.6; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.price-wrap { position: relative; }
+.price-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 15px; font-weight: 700; color: var(--mid); pointer-events: none; }
+.price-input { padding-left: 26px !important; font-size: 15px; font-weight: 700; }
+.toggle-row { display: flex; align-items: center; justify-content: space-between; background: var(--off); border-radius: var(--radius-input); padding: 12px 14px; }
+.toggle-label { font-size: 13px; font-weight: 700; }
+.toggle-sub { font-size: 11px; color: var(--light); margin-top: 1px; }
+.toggle-sw { width: 44px; height: 26px; border-radius: 13px; position: relative; cursor: pointer; transition: background .2s; flex-shrink: 0; }
+.toggle-sw .dot { position: absolute; width: 20px; height: 20px; border-radius: 50%; background: #fff; top: 3px; transition: left .2s; box-shadow: 0 1px 4px rgba(0,0,0,.2); }
+.toggle-sw.on { background: var(--gold); }
+.toggle-sw.on .dot { left: 21px; }
+.toggle-sw.off { background: #e5e7eb; }
+.toggle-sw.off .dot { left: 3px; }
+.upload-zone { border: 2px dashed var(--gold); border-radius: 14px; padding: 28px 16px; text-align: center; background: var(--gold-light); margin-bottom: 12px; cursor: pointer; transition: all .2s; }
+.upload-zone:hover { background: #fff8cc; }
+.upload-icon { font-size: 30px; margin-bottom: 8px; }
+.upload-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.upload-sub { font-size: 12px; color: var(--mid); line-height: 1.6; }
+.upload-sub strong { color: var(--gold-d); }
+.photo-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+.photo-slot { aspect-ratio: 1; border-radius: 10px; background: var(--off); border: 1.5px dashed #d1d5db; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--light); cursor: pointer; transition: all .15s; }
+.photo-slot:hover { border-color: var(--gold); color: var(--gold-d); background: var(--gold-light); }
+.equip-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.etag { background: var(--off); border: 1.5px solid var(--border); border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: #374151; cursor: pointer; transition: all .15s; user-select: none; }
+.etag.on { background: rgba(245,197,24,.15); border-color: var(--gold); color: var(--charcoal); }
+.submit-bar {
+  position: sticky; bottom: 0; background: #fff;
+  border-top: 1px solid var(--border); padding: 12px 16px 20px;
+  box-shadow: 0 -4px 16px rgba(0,0,0,.06);
+}
+.submit-note { font-size: 11px; color: var(--light); text-align: center; margin-bottom: 10px; }
+.submit-note .req { color: var(--danger); }
+.submit-btn { width: 100%; background: var(--gold); color: var(--charcoal); border: none; border-radius: 13px; padding: 16px; font-size: 16px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 8px; letter-spacing: -.2px; transition: background .15s; }
+.submit-btn:hover { background: var(--gold-d); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+.page.active { animation: fadeIn .25s ease; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ══════════════════════════════
+       TOP NAV (shared)
+  ══════════════════════════════ -->
+  <nav class="topnav" id="topnav">
+    <div class="nav-logo" onclick="showPage('home')">A</div>
+    <button class="nav-post" onclick="showPage('publish')">+ Post</button>
+    <button class="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ══════════════════════════════
+       PAGE: HOMEPAGE
+  ══════════════════════════════ -->
+  <div class="page active" id="page-home">
+
+    <div class="search-hero">
+      <div class="sh-title">Find Your Perfect Vehicle</div>
+      <div class="sh-sub">Over 10,000+ car listings in Macedonia</div>
+      <div class="sh-form">
+        <select class="sh-select"><option value="">Make</option><option>BMW</option><option>Mercedes-Benz</option><option>Audi</option><option>Toyota</option><option>Volkswagen</option><option>Ford</option></select>
+        <select class="sh-select"><option value="">Select make first</option></select>
+        <select class="sh-select"><option value="">Select model</option></select>
+        <div class="sh-row">
+          <select class="sh-select"><option value="">Year From</option><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option></select>
+          <select class="sh-select"><option value="">Year to</option><option>2022</option><option>2023</option><option>2024</option><option>2025</option></select>
+        </div>
+        <div class="sh-row">
+          <input class="sh-input" type="number" placeholder="Price from (€)"/>
+          <input class="sh-input" type="number" placeholder="100,000"/>
+        </div>
+        <select class="sh-select"><option value="">Fuel type</option><option>Petrol</option><option>Diesel</option><option>Electric</option><option>Hybrid</option></select>
+        <select class="sh-select"><option value="">Transmission type</option><option>Automatic</option><option>Manual</option></select>
+        <button class="sh-btn" onclick="alert('Search coming soon!')">🔍 Search Vehicles</button>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat-cell"><div class="stat-n">10,542</div><div class="stat-l">Active Listings</div></div>
+      <div class="stat-cell"><div class="stat-n">850+</div><div class="stat-l">Sellers</div></div>
+      <div class="stat-cell"><div class="stat-n">125</div><div class="stat-l">Brands</div></div>
+      <div class="stat-cell"><div class="stat-n">24/7</div><div class="stat-l">Availability</div></div>
+    </div>
+
+    <div class="section-header">
+      <div><div class="section-title">Featured Vehicles</div><div class="section-sub">The newest and best deals on the market</div></div>
+      <div class="see-all">See all</div>
+    </div>
+
+    <!-- BMW Card -->
+    <div class="car-card" onclick="showDetail('bmw')">
+      <div class="car-photo">
+        <svg viewBox="0 0 359 190" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="b1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#111825"/><stop offset="100%" stop-color="#06080f"/></linearGradient><radialGradient id="g1" cx="50%" cy="65%" r="45%"><stop offset="0%" stop-color="rgba(245,197,24,0.1)"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="359" height="190" fill="url(#b1)"/><circle cx="179" cy="120" r="120" fill="url(#g1)"/><path d="M60 142 Q62 110 80 100 L115 90 Q150 80 179 79 Q208 78 245 83 L282 97 Q302 108 310 124 L316 142 Z" fill="#1c1c2e"/><path d="M60 142 Q60 150 67 152 L312 152 Q318 150 316 142 Z" fill="#141422"/><path d="M117 90 Q150 76 180 75 Q210 74 245 81 L238 95 Q208 88 178 89 Q148 90 122 98 Z" fill="rgba(140,190,240,0.28)"/><path d="M82 100 L115 90 L119 94 L86 103 Z" fill="rgba(140,190,240,0.2)"/><path d="M245 83 L282 97 Q302 108 312 124 L298 119 Q280 105 244 96 Z" fill="#16162a"/><ellipse cx="280" cy="148" rx="32" ry="32" fill="#080810"/><ellipse cx="280" cy="148" rx="23" ry="23" fill="#121218"/><ellipse cx="280" cy="148" rx="14" ry="14" fill="#1e1e2c"/><ellipse cx="280" cy="148" rx="6" ry="6" fill="#888"/><line x1="280" y1="134" x2="280" y2="162" stroke="#333" stroke-width="2"/><line x1="266" y1="148" x2="294" y2="148" stroke="#333" stroke-width="2"/><ellipse cx="82" cy="148" rx="32" ry="32" fill="#080810"/><ellipse cx="82" cy="148" rx="23" ry="23" fill="#121218"/><ellipse cx="82" cy="148" rx="14" ry="14" fill="#1e1e2c"/><ellipse cx="82" cy="148" rx="6" ry="6" fill="#888"/><ellipse cx="308" cy="122" rx="12" ry="8" fill="rgba(255,245,200,0.5)"/><ellipse cx="308" cy="122" rx="6" ry="4" fill="rgba(255,255,210,0.85)"/><rect x="296" y="114" width="15" height="2" rx="1" fill="rgba(255,255,220,0.7)"/><rect x="62" y="118" width="7" height="16" rx="3" fill="rgba(255,40,40,0.6)"/><ellipse cx="180" cy="181" rx="130" ry="5" fill="rgba(28,28,46,0.5)"/></svg>
+        <div class="feat-badge">Featured</div>
+        <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)">♡</button>
+        <div class="photo-count">1 / 3</div>
+      </div>
+      <div class="car-body">
+        <div class="car-name">BMW 530d xDrive</div>
+        <div class="car-price">€45,000</div>
+        <div class="car-specs">
+          <div class="car-spec">🗓 <strong>2023</strong></div>
+          <div class="car-spec">🛣 <strong>25,000 km</strong></div>
+          <div class="car-spec">⛽ <strong>Diesel</strong></div>
+          <div class="car-spec">⚙️ <strong>Automatic</strong></div>
+        </div>
+        <div class="car-location">📍 Skopje</div>
+      </div>
+    </div>
+
+    <!-- Mercedes Card -->
+    <div class="car-card" onclick="showDetail('merc')">
+      <div class="car-photo" style="background:#1a1a10">
+        <svg viewBox="0 0 359 190" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="b2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a1a10"/><stop offset="100%" stop-color="#0d0d08"/></linearGradient></defs><rect width="359" height="190" fill="url(#b2)"/><path d="M40 145 Q42 105 65 90 L110 76 Q150 65 179 64 Q210 63 255 70 L295 85 Q318 98 325 118 L330 145 Z" fill="#4a3a28"/><path d="M40 145 L330 145 L330 152 L40 152 Z" fill="#3a2c1e"/><path d="M112 76 Q150 62 180 61 Q212 60 254 68 L246 82 Q210 74 178 75 Q146 76 116 86 Z" fill="rgba(160,200,240,0.25)"/><rect x="112" y="60" width="140" height="5" rx="2.5" fill="#6a5a40"/><ellipse cx="285" cy="150" rx="34" ry="34" fill="#111108"/><ellipse cx="285" cy="150" rx="25" ry="25" fill="#1e1e14"/><ellipse cx="285" cy="150" rx="14" ry="14" fill="#2a2a1e"/><ellipse cx="285" cy="150" rx="6" ry="6" fill="#aaa"/><ellipse cx="76" cy="150" rx="34" ry="34" fill="#111108"/><ellipse cx="76" cy="150" rx="25" ry="25" fill="#1e1e14"/><ellipse cx="76" cy="150" rx="14" ry="14" fill="#2a2a1e"/><ellipse cx="76" cy="150" rx="6" ry="6" fill="#aaa"/><ellipse cx="324" cy="120" rx="8" ry="5" fill="rgba(255,255,180,0.7)"/><ellipse cx="179" cy="182" rx="140" ry="6" fill="rgba(0,0,0,0.4)"/></svg>
+        <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)">♡</button>
+        <div class="photo-count">1 / 5</div>
+      </div>
+      <div class="car-body">
+        <div class="car-name">Mercedes-Benz GLE 350d</div>
+        <div class="car-price">€62,000</div>
+        <div class="car-specs">
+          <div class="car-spec">🗓 <strong>2022</strong></div>
+          <div class="car-spec">🛣 <strong>31,000 km</strong></div>
+          <div class="car-spec">⛽ <strong>Diesel</strong></div>
+          <div class="car-spec">⚙️ <strong>Automatic</strong></div>
+        </div>
+        <div class="car-location">📍 Bitola</div>
+      </div>
+    </div>
+
+    <!-- Audi Card -->
+    <div class="car-card" onclick="showDetail('audi')">
+      <div class="car-photo" style="background:#0a0a18">
+        <svg viewBox="0 0 359 190" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="b3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a0a18"/><stop offset="100%" stop-color="#050508"/></linearGradient><radialGradient id="g3" cx="50%" cy="55%" r="50%"><stop offset="0%" stop-color="rgba(180,20,20,0.15)"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="359" height="190" fill="url(#b3)"/><circle cx="179" cy="110" r="130" fill="url(#g3)"/><path d="M50 148 Q52 112 74 98 L118 82 Q155 70 179 69 Q205 68 248 76 L290 92 Q312 104 320 124 L326 148 Z" fill="#8a0010"/><path d="M50 148 L326 148 L326 154 L50 154 Z" fill="#6a000c"/><path d="M120 83 Q155 67 180 66 Q206 65 248 74 L240 88 Q206 80 178 81 Q150 82 124 93 Z" fill="rgba(100,150,200,0.3)"/><path d="M76 98 L118 82 L122 86 L80 101 Z" fill="rgba(100,150,200,0.2)"/><ellipse cx="282" cy="150" rx="33" ry="33" fill="#0a0a0a"/><ellipse cx="282" cy="150" rx="24" ry="24" fill="#141414"/><ellipse cx="282" cy="150" rx="14" ry="14" fill="#1e1e1e"/><ellipse cx="282" cy="150" rx="7" ry="7" fill="#999"/><ellipse cx="80" cy="150" rx="33" ry="33" fill="#0a0a0a"/><ellipse cx="80" cy="150" rx="24" ry="24" fill="#141414"/><ellipse cx="80" cy="150" rx="14" ry="14" fill="#1e1e1e"/><ellipse cx="80" cy="150" rx="7" ry="7" fill="#999"/><rect x="310" y="104" width="14" height="3" rx="1.5" fill="rgba(255,255,200,0.8)"/><ellipse cx="179" cy="183" rx="130" ry="5" fill="rgba(138,0,16,0.2)"/><circle cx="300" cy="118" r="5" fill="none" stroke="rgba(200,200,200,0.4)" stroke-width="1.2"/><circle cx="306" cy="118" r="5" fill="none" stroke="rgba(200,200,200,0.4)" stroke-width="1.2"/><circle cx="312" cy="118" r="5" fill="none" stroke="rgba(200,200,200,0.4)" stroke-width="1.2"/><circle cx="318" cy="118" r="5" fill="none" stroke="rgba(200,200,200,0.4)" stroke-width="1.2"/></svg>
+        <div class="feat-badge">Featured</div>
+        <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)">♡</button>
+        <div class="photo-count">1 / 4</div>
+      </div>
+      <div class="car-body">
+        <div class="car-name">Audi RS5</div>
+        <div class="car-price">€68,000</div>
+        <div class="car-specs">
+          <div class="car-spec">🗓 <strong>2024</strong></div>
+          <div class="car-spec">🛣 <strong>8,000 km</strong></div>
+          <div class="car-spec">⛽ <strong>Petrol</strong></div>
+          <div class="car-spec">⚙️ <strong>Automatic</strong></div>
+        </div>
+        <div class="car-location">📍 Skopje</div>
+      </div>
+    </div>
+
+    <!-- VW Card -->
+    <div class="car-card" onclick="showDetail('vw')">
+      <div class="car-photo" style="background:#e8eaf0">
+        <svg viewBox="0 0 359 190" xmlns="http://www.w3.org/2000/svg"><rect width="359" height="190" fill="#e8eaf0"/><path d="M55 148 Q57 115 76 103 L120 90 Q155 80 179 79 Q205 78 242 84 L278 97 Q297 108 304 126 L308 148 Z" fill="#e0e0e8" stroke="#ccc" stroke-width="1"/><rect x="55" y="130" width="253" height="4" rx="2" fill="#cc0000" opacity="0.7"/><path d="M122 90 Q155 77 180 76 Q206 75 242 82 L236 94 Q205 87 178 88 Q150 89 126 98 Z" fill="rgba(120,160,200,0.3)"/><ellipse cx="272" cy="150" rx="30" ry="30" fill="#222"/><ellipse cx="272" cy="150" rx="20" ry="20" fill="#333"/><ellipse cx="272" cy="150" rx="11" ry="11" fill="#444"/><ellipse cx="272" cy="150" rx="5" ry="5" fill="#999"/><ellipse cx="88" cy="150" rx="30" ry="30" fill="#222"/><ellipse cx="88" cy="150" rx="20" ry="20" fill="#333"/><ellipse cx="88" cy="150" rx="11" ry="11" fill="#444"/><ellipse cx="88" cy="150" rx="5" ry="5" fill="#999"/><ellipse cx="295" cy="118" rx="9" ry="6" fill="rgba(255,240,180,0.5)"/><ellipse cx="179" cy="180" rx="110" ry="4" fill="rgba(0,0,0,0.1)"/><circle cx="296" cy="113" r="6" fill="rgba(0,50,160,0.3)" stroke="rgba(0,50,160,0.5)" stroke-width="1"/></svg>
+        <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)">♡</button>
+        <div class="photo-count">1 / 6</div>
+      </div>
+      <div class="car-body">
+        <div class="car-name">Volkswagen Golf 8 GTI</div>
+        <div class="car-price">€32,000</div>
+        <div class="car-specs">
+          <div class="car-spec">🗓 <strong>2023</strong></div>
+          <div class="car-spec">🛣 <strong>12,000 km</strong></div>
+          <div class="car-spec">⛽ <strong>Petrol</strong></div>
+          <div class="car-spec">⚙️ <strong>Manual</strong></div>
+        </div>
+        <div class="car-location">📍 Ohrid</div>
+      </div>
+    </div>
+
+    <div class="why-section">
+      <div class="why-title">Why Avtopazar24?</div>
+      <div class="why-sub">The largest vehicle marketplace in Macedonia</div>
+      <div class="why-items">
+        <div class="why-item"><div class="why-icon">🚗</div><div><div class="why-label">10,000+ Listings</div><div class="why-desc">Largest vehicle selection in the country</div></div></div>
+        <div class="why-item"><div class="why-icon">🔒</div><div><div class="why-label">Security</div><div class="why-desc">Verified sellers and secure transactions</div></div></div>
+        <div class="why-item"><div class="why-icon">⚡</div><div><div class="why-label">Fast & Easy</div><div class="why-desc">Post a listing in 5 minutes and start selling</div></div></div>
+        <div class="why-item"><div class="why-icon">👥</div><div><div class="why-label">850+ Sellers</div><div class="why-desc">Private and professional sellers in one place</div></div></div>
+      </div>
+    </div>
+
+    <div style="padding-top:20px">
+      <div class="cta-banner">
+        <h3>Selling a Vehicle?</h3>
+        <p>Post a free listing and reach thousands of potential buyers</p>
+        <button onclick="showPage('publish')">Post Free Listing</button>
+      </div>
+    </div>
+
+    <div class="site-footer">
+      <div class="footer-logo"><div class="footer-logo-icon">A</div><div class="footer-logo-text">Avtopazar24</div></div>
+      <div class="footer-tag">The largest vehicle marketplace in Macedonia</div>
+      <div class="footer-col-title">Quick Links</div>
+      <ul class="footer-links"><li>Search Vehicles</li><li>Post Listing</li><li>Pricing</li><li>About Us</li></ul>
+      <div class="footer-col-title">Support</div>
+      <ul class="footer-links"><li>Contact</li><li>FAQ</li><li>Terms of Service</li><li>Privacy Policy</li></ul>
+      <div class="footer-col-title">Contact</div>
+      <div class="footer-contact">📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="741d1a121b341502001b04150e150646405a191f">[email&#160;protected]</a></div>
+      <div class="footer-contact">⏰ Monday–Friday: 9:00 AM – 6:00 PM</div>
+      <div class="footer-socials"><div class="footer-social">f</div><div class="footer-social">📷</div></div>
+      <div class="footer-bottom">© 2026 Avtopazar24. All Rights Reserved.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       PAGE: CAR DETAIL
+  ══════════════════════════════ -->
+  <div class="page" id="page-detail">
+    <div class="back-bar" onclick="showPage('home')"><span class="chevron">‹</span> Back to Results</div>
+
+    <div class="detail-gallery">
+      <div class="detail-main" id="detailMain">
+        <svg viewBox="0 0 359 230" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="dbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#111825"/><stop offset="100%" stop-color="#060810"/></linearGradient><radialGradient id="dgl" cx="50%" cy="65%" r="45%"><stop offset="0%" stop-color="rgba(245,197,24,0.1)"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="359" height="230" fill="url(#dbg)"/><circle cx="179" cy="150" r="150" fill="url(#dgl)"/><path d="M50 170 Q52 128 75 112 L125 96 Q162 84 185 83 Q212 82 255 88 L298 105 Q322 118 330 140 L336 170 Z" fill="#1c1c2e"/><path d="M50 170 Q50 180 57 182 L332 182 Q338 180 336 170 Z" fill="#141422"/><path d="M127 97 Q162 81 186 80 Q213 79 255 86 L247 101 Q213 94 184 95 Q155 96 130 107 Z" fill="rgba(140,190,240,0.28)"/><path d="M80 112 L125 96 L130 100 L84 116 Z" fill="rgba(140,190,240,0.2)"/><path d="M255 88 L298 105 Q322 118 332 138 L318 133 Q300 118 254 100 Z" fill="#161628"/><ellipse cx="295" cy="175" rx="35" ry="35" fill="#080810"/><ellipse cx="295" cy="175" rx="26" ry="26" fill="#12121e"/><ellipse cx="295" cy="175" rx="16" ry="16" fill="#1e1e2e"/><ellipse cx="295" cy="175" rx="7" ry="7" fill="#888"/><line x1="295" y1="159" x2="295" y2="191" stroke="#333" stroke-width="2.5"/><line x1="279" y1="175" x2="311" y2="175" stroke="#333" stroke-width="2.5"/><line x1="284" y1="164" x2="306" y2="186" stroke="#333" stroke-width="1.5"/><line x1="306" y1="164" x2="284" y2="186" stroke="#333" stroke-width="1.5"/><ellipse cx="84" cy="175" rx="35" ry="35" fill="#080810"/><ellipse cx="84" cy="175" rx="26" ry="26" fill="#12121e"/><ellipse cx="84" cy="175" rx="16" ry="16" fill="#1e1e2e"/><ellipse cx="84" cy="175" rx="7" ry="7" fill="#888"/><line x1="84" y1="159" x2="84" y2="191" stroke="#333" stroke-width="2.5"/><line x1="68" y1="175" x2="100" y2="175" stroke="#333" stroke-width="2.5"/><ellipse cx="328" cy="138" rx="14" ry="9" fill="rgba(255,245,200,0.5)"/><ellipse cx="328" cy="138" rx="7" ry="5" fill="rgba(255,255,210,0.85)"/><rect x="316" y="130" width="16" height="2.5" rx="1.25" fill="rgba(255,255,220,0.7)"/><rect x="52" y="148" width="8" height="16" rx="3" fill="rgba(255,40,40,0.6)"/><ellipse cx="316" cy="148" rx="8" ry="6" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><ellipse cx="325" cy="148" rx="8" ry="6" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><ellipse cx="185" cy="210" rx="150" ry="7" fill="rgba(28,28,46,0.5)"/></svg>
+        <div class="gallery-count" id="galCount">1 / 3</div>
+        <div class="gallery-nav">
+          <button class="gnav" onclick="galNav(-1)">‹</button>
+          <button class="gnav" onclick="galNav(1)">›</button>
+        </div>
+      </div>
+      <div class="thumbstrip">
+        <div class="thumb on" onclick="selectThumb(0,this)"><svg viewBox="0 0 74 54" xmlns="http://www.w3.org/2000/svg"><rect width="74" height="54" fill="#111825"/><path d="M8 40 Q9 26 18 22 L28 18 Q38 15 44 15 Q52 15 60 18 L68 26 Q70 31 70 40 Z" fill="#1c1c2e"/><ellipse cx="60" cy="41" rx="10" ry="10" fill="#080810"/><ellipse cx="60" cy="41" rx="5" ry="5" fill="#1e1e2e"/><ellipse cx="16" cy="41" rx="10" ry="10" fill="#080810"/><ellipse cx="16" cy="41" rx="5" ry="5" fill="#1e1e2e"/><ellipse cx="67" cy="31" rx="4" ry="3" fill="rgba(255,245,200,0.7)"/></svg></div>
+        <div class="thumb" onclick="selectThumb(1,this)"><svg viewBox="0 0 74 54" xmlns="http://www.w3.org/2000/svg"><rect width="74" height="54" fill="#1a1410"/><rect x="4" y="18" width="66" height="22" rx="4" fill="#2a2018"/><circle cx="18" cy="38" r="9" fill="none" stroke="#3a3028" stroke-width="2.5"/><circle cx="18" cy="38" r="3" fill="#4a4038"/><line x1="18" y1="29" x2="18" y2="47" stroke="#3a3028" stroke-width="1.5"/><line x1="9" y1="38" x2="27" y2="38" stroke="#3a3028" stroke-width="1.5"/><rect x="34" y="20" width="32" height="16" rx="3" fill="#1a3a5a"/><rect x="36" y="22" width="28" height="12" rx="2" fill="#0d2a4a"/><rect x="4" y="44" width="28" height="8" rx="3" fill="#2a2018"/><rect x="42" y="44" width="28" height="8" rx="3" fill="#2a2018"/></svg></div>
+        <div class="thumb" onclick="selectThumb(2,this)"><svg viewBox="0 0 74 54" xmlns="http://www.w3.org/2000/svg"><rect width="74" height="54" fill="#14181a"/><path d="M6 40 Q7 26 14 22 L24 18 Q36 15 44 15 Q52 15 60 18 L66 26 Q68 32 68 40 Z" fill="#141422"/><rect x="6" y="28" width="10" height="8" rx="2" fill="rgba(255,40,40,0.7)"/><rect x="58" y="28" width="10" height="8" rx="2" fill="rgba(255,40,40,0.7)"/><rect x="27" y="34" width="20" height="5" rx="1" fill="#ccc"/><ellipse cx="16" cy="42" rx="9" ry="9" fill="#080810"/><ellipse cx="16" cy="42" rx="4" ry="4" fill="#1e1e2e"/><ellipse cx="58" cy="42" rx="9" ry="9" fill="#080810"/><ellipse cx="58" cy="42" rx="4" ry="4" fill="#1e1e2e"/></svg></div>
+      </div>
+    </div>
+
+    <div class="detail-title">
+      <div class="detail-badges">
+        <span class="d-feat">Featured</span>
+        <span class="d-loc">📍 Skopje</span>
+        <span class="d-time">🕐 2 days ago</span>
+      </div>
+      <div class="d-name" id="detailName">BMW 530d xDrive</div>
+      <div class="d-price" id="detailPrice">€45,000</div>
+    </div>
+
+    <div class="quick-specs">
+      <div class="qs"><div class="qs-icon">📅</div><div><div class="qs-l">Year</div><div class="qs-v" id="dYear">2023</div></div></div>
+      <div class="qs"><div class="qs-icon">🛣</div><div><div class="qs-l">Kilometers</div><div class="qs-v" id="dKm">25,000 km</div></div></div>
+      <div class="qs"><div class="qs-icon">⛽</div><div><div class="qs-l">Fuel</div><div class="qs-v" id="dFuel">Diesel</div></div></div>
+      <div class="qs"><div class="qs-icon">⚙️</div><div><div class="qs-l">Transmission</div><div class="qs-v" id="dTrans">Automatic</div></div></div>
+    </div>
+
+    <div class="d-section">
+      <div class="d-section-title">Description</div>
+      <div class="d-desc">Vehicle in excellent condition, regularly serviced with complete service history. First owner, garaged, no accidents. Full equipment with M package.</div>
+    </div>
+
+    <div class="d-section">
+      <div class="d-section-title">Additional Equipment</div>
+      <ul class="equip-list">
+        <li class="equip-item"><div class="equip-dot"></div>Leather Interior</li>
+        <li class="equip-item"><div class="equip-dot"></div>Panoramic Roof</li>
+        <li class="equip-item"><div class="equip-dot"></div>Adaptive LED Headlights</li>
+        <li class="equip-item"><div class="equip-dot"></div>Parking Assistant</li>
+        <li class="equip-item"><div class="equip-dot"></div>Head-Up Display</li>
+        <li class="equip-item"><div class="equip-dot"></div>Harman Kardon Sound System</li>
+        <li class="equip-item"><div class="equip-dot"></div>Heated Seats</li>
+        <li class="equip-item"><div class="equip-dot"></div>Electric Seats with Memory</li>
+      </ul>
+    </div>
+
+    <div class="d-section">
+      <div class="d-section-title">Technical Specifications</div>
+      <table class="specs-table">
+        <tr><td>Make</td><td id="sMake">BMW</td></tr>
+        <tr><td>Model</td><td id="sModel">530d xDrive</td></tr>
+        <tr><td>Year</td><td>2023</td></tr>
+        <tr><td>Mileage</td><td>25,000 km</td></tr>
+        <tr><td>Fuel</td><td>Diesel</td></tr>
+        <tr><td>Transmission</td><td>Automatic</td></tr>
+        <tr><td>Body Type</td><td>Sedan</td></tr>
+        <tr><td>Color</td><td>Blue</td></tr>
+        <tr><td>Doors</td><td>4</td></tr>
+        <tr><td>Seats</td><td>5</td></tr>
+        <tr><td>Power</td><td>286 HP</td></tr>
+        <tr><td>Displacement</td><td>2993 cm³</td></tr>
+      </table>
+    </div>
+
+    <div class="contact-seller">
+      <div class="cs-header">Contact Seller</div>
+      <div class="cs-vendor">
+        <div class="cs-avatar" id="vendorAvatar">M</div>
+        <div><div class="cs-name" id="vendorName">Mark Peterson</div><div class="cs-since">Member since 2020</div></div>
+      </div>
+      <div class="cs-stats">
+        <div class="cs-stat"><div class="cs-stat-n">12</div><div class="cs-stat-l">Active Listings</div></div>
+        <div class="cs-stat"><div class="cs-stat-n">4.8 ★</div><div class="cs-stat-l">Rating</div></div>
+      </div>
+      <div class="cs-location">📍 Skopje</div>
+      <div class="cs-actions">
+        <button class="cs-primary">📞 Show Phone</button>
+        <button class="cs-secondary">✉️ Send Message</button>
+        <button class="cs-secondary">📧 Send Email</button>
+        <div class="cs-share">↗ Share Listing</div>
+      </div>
+    </div>
+
+    <div class="site-footer">
+      <div class="footer-logo"><div class="footer-logo-icon">A</div><div class="footer-logo-text">Avtopazar24</div></div>
+      <div class="footer-tag">The largest vehicle marketplace in Macedonia</div>
+      <ul class="footer-links" style="margin-bottom:10px"><li>Search Vehicles</li><li>Post Listing</li><li>Contact</li><li>Privacy Policy</li></ul>
+      <div class="footer-socials"><div class="footer-social">f</div><div class="footer-social">📷</div></div>
+      <div class="footer-bottom">© 2026 Avtopazar24. All Rights Reserved.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       PAGE: PUBLISH CAR
+  ══════════════════════════════ -->
+  <div class="page" id="page-publish">
+    <div class="back-bar" onclick="showPage('home')"><span class="chevron">‹</span> Back</div>
+
+    <div class="pub-header">
+      <div class="pub-title">Post a Vehicle</div>
+      <div class="pub-sub">Fill in the details below to publish your listing</div>
+    </div>
+
+    <!-- Step 1: Photos -->
+    <div class="pub-step">
+      <div class="pub-step-title"><span class="step-num">1</span> Photos</div>
+      <div class="upload-zone" onclick="alert('File picker would open here')">
+        <div class="upload-icon">📷</div>
+        <div class="upload-title">Upload Photos</div>
+        <div class="upload-sub">Tap to browse or drag & drop<br><strong>JPG, PNG, WEBP · Max 10MB each</strong></div>
+      </div>
+      <div class="photo-grid">
+        <div class="photo-slot">+</div>
+        <div class="photo-slot">+</div>
+        <div class="photo-slot">+</div>
+        <div class="photo-slot">+</div>
+      </div>
+    </div>
+
+    <!-- Step 2: Vehicle Details -->
+    <div class="pub-step">
+      <div class="pub-step-title"><span class="step-num">2</span> Vehicle Details</div>
+      <div class="pub-field">
+        <label class="pub-label">Make <span class="req">*</span></label>
+        <select class="pub-select"><option value="">Select make</option><option>BMW</option><option>Mercedes-Benz</option><option>Audi</option><option>Toyota</option><option>Volkswagen</option><option>Ford</option></select>
+      </div>
+      <div class="pub-field">
+        <label class="pub-label">Model <span class="req">*</span></label>
+        <select class="pub-select"><option value="">Select model</option></select>
+      </div>
+      <div class="two-col">
+        <div class="pub-field">
+          <label class="pub-label">Year <span class="req">*</span></label>
+          <input class="pub-input" type="number" placeholder="e.g. 2022"/>
+        </div>
+        <div class="pub-field">
+          <label class="pub-label">Body Type <span class="req">*</span></label>
+          <select class="pub-select"><option>Sedan</option><option>SUV</option><option>Coupe</option><option>Hatchback</option><option>Estate</option></select>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="pub-field">
+          <label class="pub-label">Fuel Type <span class="req">*</span></label>
+          <select class="pub-select"><option>Diesel</option><option>Petrol</option><option>Electric</option><option>Hybrid</option></select>
+        </div>
+        <div class="pub-field">
+          <label class="pub-label">Transmission <span class="req">*</span></label>
+          <select class="pub-select"><option>Automatic</option><option>Manual</option></select>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="pub-field">
+          <label class="pub-label">Mileage (km) <span class="req">*</span></label>
+          <input class="pub-input" type="number" placeholder="e.g. 45000"/>
+        </div>
+        <div class="pub-field">
+          <label class="pub-label">Engine (cm³)</label>
+          <input class="pub-input" type="number" placeholder="e.g. 1998"/>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="pub-field">
+          <label class="pub-label">Power (HP)</label>
+          <input class="pub-input" type="number" placeholder="e.g. 190"/>
+        </div>
+        <div class="pub-field">
+          <label class="pub-label">Doors</label>
+          <select class="pub-select"><option>2</option><option>3</option><option selected>4</option><option>5</option></select>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="pub-field">
+          <label class="pub-label">Color</label>
+          <input class="pub-input" type="text" placeholder="e.g. Blue"/>
+        </div>
+        <div class="pub-field">
+          <label class="pub-label">Seats</label>
+          <select class="pub-select"><option>2</option><option>4</option><option selected>5</option><option>7</option></select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Pricing -->
+    <div class="pub-step">
+      <div class="pub-step-title"><span class="step-num">3</span> Pricing</div>
+      <div class="pub-field">
+        <label class="pub-label">Price (€) <span class="req">*</span></label>
+        <div class="price-wrap">
+          <span class="price-prefix">€</span>
+          <input class="pub-input price-input" type="number" placeholder="0"/>
+        </div>
+      </div>
+      <div class="toggle-row">
+        <div><div class="toggle-label">Price Negotiable</div><div class="toggle-sub">Buyers can make offers</div></div>
+        <div class="toggle-sw off" onclick="toggleSw(this)"><div class="dot"></div></div>
+      </div>
+    </div>
+
+    <!-- Step 4: Description -->
+    <div class="pub-step">
+      <div class="pub-step-title"><span class="step-num">4</span> Description</div>
+      <div class="pub-field">
+        <label class="pub-label">Vehicle Title <span class="req">*</span></label>
+        <input class="pub-input" type="text" placeholder="e.g. BMW 530d xDrive — Full M Package"/>
+      </div>
+      <div class="pub-field">
+        <label class="pub-label">Description</label>
+        <textarea class="pub-textarea" placeholder="Describe the condition, history, extras..."></textarea>
+      </div>
+      <div class="pub-field">
+        <label class="pub-label">Additional Equipment</label>
+        <div class="equip-tags">
+          <div class="etag" onclick="toggleEtag(this)">Leather Interior</div>
+          <div class="etag" onclick="toggleEtag(this)">Panoramic Roof</div>
+          <div class="etag" onclick="toggleEtag(this)">LED Headlights</div>
+          <div class="etag" onclick="toggleEtag(this)">Parking Sensors</div>
+          <div class="etag" onclick="toggleEtag(this)">Navigation</div>
+          <div class="etag" onclick="toggleEtag(this)">Heated Seats</div>
+          <div class="etag" onclick="toggleEtag(this)">Apple CarPlay</div>
+          <div class="etag" onclick="toggleEtag(this)">Head-Up Display</div>
+          <div class="etag" onclick="toggleEtag(this)">360° Camera</div>
+          <div class="etag" onclick="toggleEtag(this)">Keyless Entry</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 5: Location -->
+    <div class="pub-step">
+      <div class="pub-step-title"><span class="step-num">5</span> Location</div>
+      <div class="pub-field">
+        <label class="pub-label">City <span class="req">*</span></label>
+        <select class="pub-select"><option value="">Select city</option><option>Skopje</option><option>Bitola</option><option>Ohrid</option><option>Tetovo</option><option>Kumanovo</option><option>Strumica</option></select>
+      </div>
+      <div class="pub-field">
+        <label class="pub-label">Address / Area</label>
+        <input class="pub-input" type="text" placeholder="e.g. Centar, Skopje"/>
+      </div>
+    </div>
+
+    <!-- Step 6: Contact -->
+    <div class="pub-step">
+      <div class="pub-step-title"><span class="step-num">6</span> Contact Info</div>
+      <div class="pub-field">
+        <label class="pub-label">Phone Number <span class="req">*</span></label>
+        <input class="pub-input" type="tel" placeholder="+389 70 000 000"/>
+      </div>
+      <div class="pub-field">
+        <label class="pub-label">Email</label>
+        <input class="pub-input" type="email" placeholder="your@email.com"/>
+      </div>
+      <div class="toggle-row">
+        <div><div class="toggle-label">Show Phone on Listing</div><div class="toggle-sub">Visible to all visitors</div></div>
+        <div class="toggle-sw on" onclick="toggleSw(this)"><div class="dot"></div></div>
+      </div>
+    </div>
+
+    <!-- Sticky submit -->
+    <div class="submit-bar">
+      <div class="submit-note"><span class="req">*</span> Required fields · Free to post</div>
+      <button class="submit-btn" onclick="handleSubmit()">🚀 Publish Listing</button>
+    </div>
+  </div>
+
+</div><!-- /#app -->
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ─── CAR DATA ───
+const cars = {
+  bmw:  { name:'BMW 530d xDrive',       price:'€45,000', year:'2023', km:'25,000 km', fuel:'Diesel',  trans:'Automatic', make:'BMW',             model:'530d xDrive',  vendor:'M', vname:'Mark Peterson' },
+  merc: { name:'Mercedes-Benz GLE 350d', price:'€62,000', year:'2022', km:'31,000 km', fuel:'Diesel',  trans:'Automatic', make:'Mercedes-Benz',   model:'GLE 350d',     vendor:'S', vname:'Stefan Novak'  },
+  audi: { name:'Audi RS5',               price:'€68,000', year:'2024', km:'8,000 km',  fuel:'Petrol',  trans:'Automatic', make:'Audi',            model:'RS5',          vendor:'A', vname:'Ana Kovač'     },
+  vw:   { name:'Volkswagen Golf 8 GTI',  price:'€32,000', year:'2023', km:'12,000 km', fuel:'Petrol',  trans:'Manual',    make:'Volkswagen',      model:'Golf 8 GTI',   vendor:'J', vname:'Jan Hristov'   }
+};
+
+// ─── PAGE ROUTING ───
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + (page === 'home' ? 'home' : page === 'detail' ? 'detail' : 'publish')).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showDetail(carId) {
+  const c = cars[carId];
+  document.getElementById('detailName').textContent = c.name;
+  document.getElementById('detailPrice').textContent = c.price;
+  document.getElementById('dYear').textContent = c.year;
+  document.getElementById('dKm').textContent = c.km;
+  document.getElementById('dFuel').textContent = c.fuel;
+  document.getElementById('dTrans').textContent = c.trans;
+  document.getElementById('sMake').textContent = c.make;
+  document.getElementById('sModel').textContent = c.model;
+  document.getElementById('vendorAvatar').textContent = c.vendor;
+  document.getElementById('vendorName').textContent = c.vname;
+  galIdx = 0;
+  document.getElementById('galCount').textContent = '1 / 3';
+  document.querySelectorAll('.thumb').forEach((t,i) => t.classList.toggle('on', i === 0));
+  showPage('detail');
+}
+
+// ─── GALLERY ───
+let galIdx = 0;
+function galNav(dir) {
+  galIdx = (galIdx + dir + 3) % 3;
+  document.getElementById('galCount').textContent = (galIdx + 1) + ' / 3';
+  document.querySelectorAll('.thumb').forEach((t,i) => t.classList.toggle('on', i === galIdx));
+}
+function selectThumb(idx, el) {
+  galIdx = idx;
+  document.getElementById('galCount').textContent = (idx + 1) + ' / 3';
+  document.querySelectorAll('.thumb').forEach(t => t.classList.remove('on'));
+  el.classList.add('on');
+}
+
+// ─── HEART TOGGLE ───
+function toggleHeart(btn) {
+  btn.classList.toggle('on');
+  btn.textContent = btn.classList.contains('on') ? '♥' : '♡';
+}
+
+// ─── TOGGLE SWITCH ───
+function toggleSw(el) {
+  el.classList.toggle('on');
+  el.classList.toggle('off');
+}
+
+// ─── EQUIPMENT TAG ───
+function toggleEtag(el) { el.classList.toggle('on'); }
+
+// ─── SUBMIT ───
+function handleSubmit() {
+  const btn = document.querySelec
