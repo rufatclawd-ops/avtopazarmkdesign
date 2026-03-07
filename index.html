@@ -1,1047 +1,1123 @@
 <!DOCTYPE html>
 
-<html lang="mk">
+<html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>mathmagic. — Математика во Скопје</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avtopazar24 — Find Your Perfect Vehicle in Macedonia</title>
+<meta name="description" content="The largest vehicle marketplace in Macedonia. Browse 10,000+ car listings from verified sellers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
 <style>
+/* ════════════════════════════════════════
+   RESET & DESIGN TOKENS
+════════════════════════════════════════ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { font-family: 'Figtree', sans-serif; background: #ffffff; color: #111118; -webkit-font-smoothing: antialiased; }
-a { text-decoration: none; }
-button { cursor: pointer; font-family: 'Figtree', sans-serif; }
-ul { list-style: none; }
+:root {
+  --gold: #F5C518;
+  --gold-d: #d4a900;
+  --gold-light: #fffbea;
+  --charcoal: #1d2432;
+  --charcoal2: #252e3f;
+  --white: #ffffff;
+  --off: #f7f7f9;
+  --bg: #f0f1f5;
+  --border: #e5e7eb;
+  --text: #111218;
+  --mid: #6b7280;
+  --light: #9ca3af;
+  --danger: #dc2626;
+  --green: #16a34a;
+  --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --rc: 14px; /* radius card */
+  --ri: 10px; /* radius input */
+  --rb: 12px; /* radius button */
+  --shadow: 0 2px 12px rgba(0,0,0,.07);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,.12);
+  --nav-h: 66px;
+}
+html { font-family: var(--font); color: var(--text); background: var(--bg); -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+*, button, input, select, textarea { font-family: var(--font); }
+button { cursor: pointer; border: none; background: none; }
+a { text-decoration: none; color: inherit; }
+img { display: block; max-width: 100%; }
+input, select, textarea { outline: none; }
+input:focus, select:focus, textarea:focus {
+  background: white !important; border-color: var(--gold) !important;
+  box-shadow: 0 0 0 3px rgba(245,197,24,0.2);
+}
+* { -webkit-tap-highlight-color: transparent; }
 
+/* ════════════════════════════════════════
+PAGE ROUTING
+════════════════════════════════════════ */
 .page { display: none; }
-.page.active { display: block; }
+.page.active { display: block; animation: fadeIn .2s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
 
-/* NAV */
+/* ════════════════════════════════════════
+DESKTOP NAVIGATION
+════════════════════════════════════════ */
 .nav {
-position: fixed; top: 0; left: 0; right: 0; z-index: 999;
-height: 56px; display: flex; align-items: center; justify-content: space-between;
-padding: 0 5vw; background: rgba(255,255,255,0.95);
-backdrop-filter: blur(16px); border-bottom: 1px solid #e0e0e8;
+position: sticky; top: 0; z-index: 200;
+background: var(–charcoal);
+height: var(–nav-h);
+display: flex; align-items: center;
+border-bottom: 3px solid var(–gold);
+box-shadow: 0 2px 20px rgba(0,0,0,.3);
 }
-.logo { display: flex; align-items: baseline; text-decoration: none; }
-.logo-m { font-family: ‘Cormorant Garamond’, serif; font-style: italic; font-weight: 300; font-size: 1.35rem; color: #C8392B; }
-.logo-g { font-family: ‘Figtree’, sans-serif; font-weight: 700; font-size: 1.1rem; color: #0E1F3B; }
-.nav-links { display: flex; align-items: center; gap: 1.8rem; }
-.nav-links a { font-size: 0.8rem; color: #444; text-decoration: none; transition: color 0.2s; }
-.nav-links a:hover { color: #0E1F3B; }
-.nav-cta { background-color: #0E1F3B !important; color: #ffffff !important; font-size: 0.82rem !important; font-weight: 600 !important; padding: 0.5rem 1.3rem !important; border-radius: 100px !important; }
-.nav-cta:hover { background-color: #C8392B !important; }
+.nav-inner {
+max-width: 1280px; margin: 0 auto; padding: 0 32px;
+width: 100%; display: flex; align-items: center; gap: 32px;
+}
+.nav-logo {
+display: flex; align-items: center; gap: 10px; flex-shrink: 0; cursor: pointer;
+}
+.nav-logo-icon {
+width: 36px; height: 36px; border-radius: 10px;
+background: var(–gold); color: var(–charcoal);
+display: flex; align-items: center; justify-content: center;
+font-size: 16px; font-weight: 900;
+}
+.nav-logo-text { font-size: 18px; font-weight: 800; color: white; letter-spacing: -.4px; }
+.nav-logo-text em { font-style: normal; color: var(–gold); }
+.nav-links { display: flex; gap: 4px; flex: 1; }
+.nav-link {
+padding: 7px 14px; border-radius: 8px;
+font-size: 14px; font-weight: 600; color: rgba(255,255,255,.6);
+cursor: pointer; transition: all .15s;
+}
+.nav-link:hover, .nav-link.on { color: white; background: rgba(255,255,255,.1); }
+.nav-right { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+.nav-search-box {
+background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+border-radius: 8px; padding: 8px 14px; font-size: 14px; color: rgba(255,255,255,.7);
+width: 220px;
+}
+.nav-search-box::placeholder { color: rgba(255,255,255,.35); }
+.nav-post-btn {
+background: var(–gold); color: var(–charcoal);
+border-radius: 8px; padding: 9px 18px;
+font-size: 14px; font-weight: 800;
+display: flex; align-items: center; gap: 6px;
+transition: background .15s; white-space: nowrap;
+}
+.nav-post-btn:hover { background: var(–gold-d); }
+/* Mobile hamburger — hidden on desktop */
+.nav-hamburger { display: none; flex-direction: column; gap: 5px; padding: 6px; }
+.nav-hamburger span { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; }
 
-/* LANGUAGE SWITCHER */
-.lang-sw { display: flex; gap: 0; border: 1.5px solid #d4d4dc; border-radius: 8px; overflow: hidden; }
-.lang-btn { background: #ffffff; border: none; font-size: 0.72rem; font-weight: 700; color: #6a6a75; padding: 0.3rem 0.65rem; transition: all 0.15s; letter-spacing: 0.05em; }
-.lang-btn.on { background-color: #0E1F3B; color: #ffffff; }
-.lang-btn:hover:not(.on) { background: #f0f0f5; color: #0E1F3B; }
+/* ════════════════════════════════════════
+LAYOUT CONTAINERS
+════════════════════════════════════════ */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+.page-wrap { max-width: 1280px; margin: 0 auto; padding: 32px; }
 
-/* HERO */
-.hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 7rem 5vw 5rem; background: #ffffff; }
-.hero-chip { display: inline-block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #C8392B; border: 1.5px solid rgba(200,57,43,0.35); padding: 0.35rem 1rem; border-radius: 100px; margin-bottom: 2rem; animation: fadeUp 0.6s 0.1s both; }
-.hero-wordmark { display: flex; align-items: baseline; justify-content: center; margin-bottom: 1.2rem; animation: fadeUp 0.6s 0.2s both; }
-.hero-wordmark .m { font-family: ‘Cormorant Garamond’, serif; font-style: italic; font-weight: 300; font-size: clamp(3.5rem, 11vw, 8.5rem); color: #C8392B; line-height: 0.95; }
-.hero-wordmark .g { font-family: ‘Figtree’, sans-serif; font-weight: 700; font-size: clamp(3rem, 9.5vw, 7.5rem); color: #0E1F3B; line-height: 0.95; }
-.hero-tagline { font-family: ‘Cormorant Garamond’, serif; font-weight: 300; font-size: clamp(1rem, 2.8vw, 1.6rem); color: #3a3a45; margin-bottom: 2.8rem; animation: fadeUp 0.6s 0.3s both; }
-.hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeUp 0.6s 0.4s both; }
-.btn-solid { display: inline-block; background-color: #0E1F3B; color: #ffffff; font-size: 0.9rem; font-weight: 600; padding: 0.8rem 2rem; border-radius: 100px; text-decoration: none; border: none; transition: background-color 0.2s; }
-.btn-solid:hover { background-color: #C8392B; color: #ffffff; }
-.btn-outline { display: inline-block; background-color: #ffffff; color: #0E1F3B; font-size: 0.9rem; font-weight: 600; padding: 0.8rem 2rem; border-radius: 100px; text-decoration: none; border: 2px solid #0E1F3B; transition: all 0.2s; }
-.btn-outline:hover { background-color: #0E1F3B; color: #ffffff; }
-.hero-stats { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 4rem; animation: fadeUp 0.6s 0.5s both; }
-.stat-pill { display: flex; flex-direction: column; align-items: center; padding: 1.4rem 2rem; background-color: #ffffff; border: 1.5px solid #d4d4dc; border-radius: 16px; min-width: 110px; }
-.stat-pill-n { font-family: ‘Cormorant Garamond’, serif; font-size: 2rem; font-weight: 300; color: #C8392B; line-height: 1; }
-.stat-pill-l { font-size: 0.74rem; color: #3a3a45; margin-top: 0.3rem; text-align: center; font-weight: 500; }
+/* ════════════════════════════════════════
+HOMEPAGE — HERO / SEARCH
+════════════════════════════════════════ */
+.hero {
+background: var(–charcoal);
+padding: 64px 32px;
+position: relative; overflow: hidden;
+}
+.hero::before {
+content: ‘’; position: absolute; inset: 0;
+background: radial-gradient(ellipse at 70% 50%, rgba(245,197,24,0.08) 0%, transparent 60%);
+}
+.hero-inner {
+max-width: 1280px; margin: 0 auto;
+display: grid; grid-template-columns: 1fr 420px; gap: 56px; align-items: center;
+position: relative; z-index: 1;
+}
+.hero-text h1 {
+font-size: 52px; font-weight: 900; letter-spacing: -2px;
+color: white; line-height: 1.05; margin-bottom: 16px;
+}
+.hero-text h1 em { font-style: normal; color: var(–gold); }
+.hero-text p { font-size: 17px; color: rgba(255,255,255,.5); line-height: 1.65; margin-bottom: 28px; max-width: 460px; }
+.hero-stats { display: flex; gap: 32px; }
+.hero-stat-n { font-size: 28px; font-weight: 900; color: var(–gold); letter-spacing: -1px; }
+.hero-stat-l { font-size: 12px; color: rgba(255,255,255,.4); margin-top: 2px; }
 
-.divider { height: 1px; background: #d4d4dc; }
+/* Search card */
+.search-card {
+background: white; border-radius: 18px; padding: 28px;
+box-shadow: 0 20px 60px rgba(0,0,0,.25);
+}
+.search-card-title { font-size: 18px; font-weight: 800; letter-spacing: -.4px; margin-bottom: 18px; color: var(–charcoal); }
+.sf { display: flex; flex-direction: column; gap: 12px; }
+.sf-select, .sf-input {
+width: 100%; background: var(–off); border: 1.5px solid var(–border);
+border-radius: var(–ri); padding: 11px 14px; font-size: 14px; color: var(–text);
+}
+.sf-select { appearance: none; -webkit-appearance: none;
+background-image: url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘12’ height=‘8’%3E%3Cpath d=‘M1 1l5 5 5-5’ stroke=’%236B7280’ stroke-width=‘1.5’ fill=‘none’ stroke-linecap=‘round’/%3E%3C/svg%3E”);
+background-repeat: no-repeat; background-position: right 12px center; background-color: var(–off);
+}
+.sf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.sf-btn {
+background: var(–gold); color: var(–charcoal); border-radius: var(–rb);
+padding: 13px; font-size: 15px; font-weight: 800; width: 100%;
+display: flex; align-items: center; justify-content: center; gap: 8px;
+transition: background .15s; margin-top: 4px;
+}
+.sf-btn:hover { background: var(–gold-d); }
 
-/* SECTIONS */
-.section { padding: 7rem 5vw; background: #ffffff; }
-.section-inner { max-width: 1080px; margin: 0 auto; }
-.sec-label { display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #C8392B; margin-bottom: 1rem; }
-.sec-title { font-family: ‘Cormorant Garamond’, serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; color: #0E1F3B; line-height: 1.1; margin-bottom: 1rem; }
-.sec-sub { font-size: 1rem; color: #3a3a45; line-height: 1.75; max-width: 50ch; font-weight: 400; }
+/* ════════════════════════════════════════
+STATS BAR
+════════════════════════════════════════ */
+.stats-bar { background: white; border-bottom: 1px solid var(–border); }
+.stats-inner {
+max-width: 1280px; margin: 0 auto; padding: 0 32px;
+display: grid; grid-template-columns: repeat(4,1fr);
+}
+.stat-cell { padding: 20px 24px; border-right: 1px solid var(–border); }
+.stat-cell:last-child { border-right: none; }
+.stat-n { font-size: 24px; font-weight: 900; letter-spacing: -.8px; color: var(–charcoal); }
+.stat-l { font-size: 12px; color: var(–light); margin-top: 3px; font-weight: 500; }
 
-/* STEPS */
-.steps { display: grid; grid-template-columns: repeat(4,1fr); border: 1.5px solid #d4d4dc; border-radius: 18px; overflow: hidden; margin-top: 3.5rem; }
-.step { padding: 2.2rem 1.8rem; border-right: 1.5px solid #d4d4dc; background: #ffffff; }
-.step:last-child { border-right: none; }
-.step-n { font-family: ‘Cormorant Garamond’, serif; font-size: 0.9rem; color: #C8392B; display: block; margin-bottom: 1.2rem; }
-.step-t { font-family: ‘Cormorant Garamond’, serif; font-size: 1.3rem; font-weight: 400; color: #0E1F3B; margin-bottom: 0.6rem; }
-.step-d { font-size: 0.86rem; color: #3a3a45; line-height: 1.7; }
+/* ════════════════════════════════════════
+FEATURED LISTINGS GRID
+════════════════════════════════════════ */
+.listings-section { padding: 48px 0; }
+.section-header {
+display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 28px;
+}
+.section-title { font-size: 26px; font-weight: 800; letter-spacing: -.6px; }
+.section-sub { font-size: 14px; color: var(–mid); margin-top: 4px; }
+.see-all-link { font-size: 14px; font-weight: 700; color: var(–gold-d); cursor: pointer; display: flex; align-items: center; gap: 4px; }
+.see-all-link:hover { color: var(–charcoal); }
 
-/* SUBJECTS */
-.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5px; background: #d4d4dc; border: 1.5px solid #d4d4dc; border-radius: 18px; overflow: hidden; margin-top: 3.5rem; }
-.subj-card { background: #ffffff; padding: 2.2rem 2rem; transition: background 0.18s; }
-.subj-card:hover { background: #f5f5fa; }
-.subj-icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; }
-.subj-name { font-family: ‘Cormorant Garamond’, serif; font-size: 1.25rem; font-weight: 400; color: #0E1F3B; margin-bottom: 0.5rem; }
-.subj-desc { font-size: 0.85rem; color: #3a3a45; line-height: 1.65; margin-bottom: 0.9rem; }
-.subj-tag { display: inline-block; font-size: 0.67rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #3a3a45; border: 1.5px solid #d4d4dc; padding: 0.22rem 0.65rem; border-radius: 100px; }
+.car-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 
-/* FORMAT */
-.grid-3-fmt { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5px; background: #d4d4dc; border: 1.5px solid #d4d4dc; border-radius: 18px; overflow: hidden; margin-top: 3.5rem; }
-.fmt-card { background: #ffffff; padding: 2.5rem 2rem; transition: background 0.18s; }
-.fmt-card:hover { background: #f5f5fa; }
-.fmt-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
-.fmt-title { font-family: ‘Cormorant Garamond’, serif; font-size: 1.5rem; font-weight: 300; color: #0E1F3B; margin-bottom: 0.6rem; }
-.fmt-desc { font-size: 0.88rem; color: #3a3a45; line-height: 1.7; }
+/* Car card */
+.car-card {
+background: white; border-radius: var(–rc); overflow: hidden;
+border: 1px solid var(–border); cursor: pointer;
+box-shadow: var(–shadow); transition: all .2s;
+}
+.car-card:hover { box-shadow: var(–shadow-lg); transform: translateY(-3px); border-color: var(–gold); }
+.car-photo { width: 100%; height: 180px; position: relative; overflow: hidden; background: #1a1a2e; }
+.car-photo svg { width: 100%; height: 100%; display: block; }
+.feat-badge {
+position: absolute; top: 10px; left: 10px;
+background: var(–gold); color: var(–charcoal);
+font-size: 10px; font-weight: 800; letter-spacing: .05em;
+padding: 4px 10px; border-radius: 100px; text-transform: uppercase;
+}
+.photo-count {
+position: absolute; bottom: 10px; right: 10px;
+background: rgba(0,0,0,.55); backdrop-filter: blur(6px);
+color: white; font-size: 11px; font-weight: 600;
+padding: 3px 8px; border-radius: 6px;
+}
+.heart-btn {
+position: absolute; top: 10px; right: 10px;
+width: 32px; height: 32px; border-radius: 50%;
+background: rgba(255,255,255,.9); color: var(–mid);
+display: flex; align-items: center; justify-content: center; font-size: 15px;
+box-shadow: 0 2px 8px rgba(0,0,0,.15); transition: all .2s; z-index: 2;
+}
+.heart-btn:hover { transform: scale(1.1); }
+.heart-btn.on { color: #ef4444; background: white; }
+.car-body { padding: 14px 16px 16px; }
+.car-name { font-size: 15px; font-weight: 700; letter-spacing: -.3px; margin-bottom: 4px; }
+.car-price { font-size: 22px; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
+.car-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 0; margin-bottom: 8px; }
+.car-spec { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(–mid); }
+.car-spec strong { color: var(–text); font-weight: 600; }
+.car-location { font-size: 12px; color: var(–light); display: flex; align-items: center; gap: 4px; }
 
-/* BOOKING */
-.booking-wrap { padding: 7rem 5vw; background: #ffffff; }
-.booking-inner { max-width: 860px; margin: 0 auto; }
-.booking-hd { text-align: center; margin-bottom: 3rem; }
-.widget { display: grid; grid-template-columns: 240px 1fr; border: 1.5px solid #d4d4dc; border-radius: 20px; overflow: hidden; min-height: 500px; box-shadow: 0 4px 40px rgba(0,0,0,0.07); }
-.wl { background-color: #0E1F3B; padding: 2.5rem 2rem; display: flex; flex-direction: column; }
-.wl-logo { display: flex; align-items: baseline; margin-bottom: 0.25rem; }
-.wl-logo .m { font-family: ‘Cormorant Garamond’, serif; font-style: italic; font-weight: 300; font-size: 1.3rem; color: #C8392B; }
-.wl-logo .g { font-family: ‘Figtree’, sans-serif; font-weight: 700; font-size: 1.05rem; color: #ffffff; }
-.wl-sub { font-size: 0.72rem; color: rgba(255,255,255,0.45); margin-bottom: 2rem; }
-.wl-info { display: flex; flex-direction: column; gap: 0.85rem; }
-.wl-row { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.82rem; color: rgba(255,255,255,0.8); line-height: 1.4; }
-.wl-sel { margin-top: auto; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.12); display: none; }
-.wl-sel-lbl { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 0.4rem; }
-.wl-sel-val { font-family: ‘Cormorant Garamond’, serif; font-size: 1.15rem; font-weight: 300; color: #ffffff; line-height: 1.3; }
-.wl-sel-time { font-size: 0.82rem; color: rgba(255,255,255,0.55); margin-top: 0.25rem; }
-.wr { background: #ffffff; padding: 2.5rem 2rem; overflow-y: auto; }
-.w-prog { display: flex; gap: 4px; margin-bottom: 1.8rem; }
-.w-pd { height: 3px; flex: 1; border-radius: 2px; background-color: #d4d4dc; transition: background-color 0.3s; }
-.w-pd.on { background-color: #0E1F3B; }
-.wstep { display: none; }
-.wstep.active { display: block; }
-.ws-title { font-family: ‘Cormorant Garamond’, serif; font-size: 1.4rem; font-weight: 300; color: #0E1F3B; margin-bottom: 0.25rem; }
-.ws-sub { font-size: 0.82rem; color: #3a3a45; margin-bottom: 1.2rem; }
+/* ════════════════════════════════════════
+WHY SECTION
+════════════════════════════════════════ */
+.why-section { background: white; padding: 64px 0; border-top: 1px solid var(–border); border-bottom: 1px solid var(–border); }
+.why-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; margin-top: 36px; }
+.why-item { background: var(–off); border-radius: 16px; padding: 24px; border: 1px solid var(–border); transition: all .2s; }
+.why-item:hover { border-color: var(–gold); box-shadow: 0 4px 16px rgba(245,197,24,.12); }
+.why-icon {
+width: 52px; height: 52px; border-radius: 14px;
+background: rgba(245,197,24,.1); border: 1.5px solid rgba(245,197,24,.3);
+display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 14px;
+}
+.why-label { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.why-desc { font-size: 13px; color: var(–mid); line-height: 1.6; }
 
-/* subject opts */
-.sopt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-top: 0.5rem; }
-.sopt { display: flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1rem; background-color: #ffffff; border: 2px solid #d4d4dc; border-radius: 12px; cursor: pointer; transition: all 0.18s; }
-.sopt:hover { border-color: #0E1F3B; }
-.sopt.on { background-color: #0E1F3B; border-color: #0E1F3B; }
-.sopt.on .so-name { color: #ffffff; }
-.sopt.on .so-lvl { color: rgba(255,255,255,0.6); }
-.so-icon { font-size: 1.2rem; flex-shrink: 0; }
-.so-name { font-size: 0.84rem; font-weight: 600; color: #0E1F3B; }
-.so-lvl { font-size: 0.7rem; color: #6a6a75; margin-top: 0.1rem; }
+/* ════════════════════════════════════════
+CTA BANNER
+════════════════════════════════════════ */
+.cta-section { padding: 64px 0; }
+.cta-banner {
+background: var(–charcoal); border-radius: 20px; padding: 52px 64px;
+display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 40px;
+position: relative; overflow: hidden;
+}
+.cta-banner::after {
+content: ‘’; position: absolute; right: -60px; top: -60px;
+width: 240px; height: 240px; border-radius: 50%;
+background: rgba(245,197,24,.08); border: 1px solid rgba(245,197,24,.1);
+}
+.cta-text h2 { font-size: 32px; font-weight: 900; letter-spacing: -.8px; color: white; margin-bottom: 8px; }
+.cta-text p { font-size: 16px; color: rgba(255,255,255,.45); }
+.cta-btn {
+background: var(–gold); color: var(–charcoal); border-radius: 12px;
+padding: 16px 32px; font-size: 16px; font-weight: 800; white-space: nowrap;
+transition: background .15s; position: relative; z-index: 1;
+}
+.cta-btn:hover { background: var(–gold-d); }
 
-/* calendar */
-.cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; }
-.cal-title { font-family: ‘Cormorant Garamond’, serif; font-size: 1.25rem; font-weight: 400; color: #0E1F3B; }
-.cal-arrow { width: 30px; height: 30px; border-radius: 8px; background-color: #ffffff; border: 1.5px solid #d4d4dc; color: #0E1F3B; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: background-color 0.15s; }
-.cal-arrow:hover { background-color: #f0f0f5; }
-.cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; }
-.cal-wd { text-align: center; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.05em; color: #6a6a75; padding: 0.4rem 0; }
-.cday { position: relative; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.8rem; color: #cccccc; border: 2px solid transparent; cursor: default; transition: all 0.15s; }
-.cday.avail { color: #0E1F3B; font-weight: 700; cursor: pointer; }
-.cday.avail::after { content: ‘’; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background-color: #C8392B; }
-.cday.avail:hover { background-color: #f0f0f5; }
-.cday.sel { background-color: #0E1F3B !important; color: #ffffff !important; border-color: #0E1F3B !important; }
-.cday.sel::after { background-color: rgba(255,255,255,0.5) !important; }
-.cday.today:not(.sel) { border-color: #C8392B; color: #C8392B; }
+/* ════════════════════════════════════════
+FOOTER
+════════════════════════════════════════ */
+.footer { background: var(–charcoal); padding: 56px 0 32px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+.footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.footer-logo-icon { width: 36px; height: 36px; border-radius: 10px; background: var(–gold); color: var(–charcoal); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900; }
+.footer-logo-text { font-size: 18px; font-weight: 800; color: white; }
+.footer-tagline { font-size: 13px; color: rgba(255,255,255,.35); line-height: 1.6; max-width: 240px; margin-bottom: 20px; }
+.footer-socials { display: flex; gap: 10px; }
+.footer-social { width: 36px; height: 36px; border-radius: 9px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; font-size: 15px; color: rgba(255,255,255,.5); cursor: pointer; transition: all .15s; }
+.footer-social:hover { background: rgba(245,197,24,.2); border-color: rgba(245,197,24,.3); color: var(–gold); }
+.footer-col-title { font-size: 12px; font-weight: 700; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-links li { font-size: 14px; color: rgba(255,255,255,.4); cursor: pointer; transition: color .15s; }
+.footer-links li:hover { color: var(–gold); }
+.footer-bottom { padding-top: 24px; border-top: 1px solid rgba(255,255,255,.08); display: flex; justify-content: space-between; align-items: center; }
+.footer-copy { font-size: 13px; color: rgba(255,255,255,.25); }
 
-/* time slots */
-.time-sec { margin-top: 1.4rem; }
-.time-lbl { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #6a6a75; margin-bottom: 0.7rem; }
-.time-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.5rem; }
-.tslot { padding: 0.52rem; text-align: center; background-color: #ffffff; border: 2px solid #d4d4dc; border-radius: 8px; font-size: 0.82rem; font-weight: 600; color: #0E1F3B; transition: all 0.15s; }
-.tslot:hover { border-color: #0E1F3B; }
-.tslot.on { background-color: #0E1F3B; color: #ffffff; border-color: #0E1F3B; }
-.tslot.taken { color: #cccccc; border-color: #eeeeee; cursor: not-allowed; text-decoration: line-through; background-color: #fafafa; }
+/* ════════════════════════════════════════
+CAR DETAIL PAGE
+════════════════════════════════════════ */
+.detail-wrap { max-width: 1280px; margin: 0 auto; padding: 32px; }
+.breadcrumb { font-size: 13px; color: var(–mid); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+.breadcrumb span { cursor: pointer; }
+.breadcrumb span:hover { color: var(–charcoal); }
+.breadcrumb .sep { color: var(–light); }
+.breadcrumb .current { color: var(–text); font-weight: 600; }
 
-/* form */
-.form-wrap { display: flex; flex-direction: column; gap: 0.85rem; margin-top: 0.5rem; }
-.field { display: flex; flex-direction: column; gap: 0.3rem; }
-.field label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6a6a75; }
-.field input, .field textarea { padding: 0.72rem 1rem; background-color: #ffffff; border: 2px solid #d4d4dc; border-radius: 10px; font-family: ‘Figtree’, sans-serif; font-size: 0.9rem; color: #111118; outline: none; transition: border-color 0.2s; width: 100%; }
-.field input:focus, .field textarea:focus { border-color: #0E1F3B; }
-.field textarea { min-height: 80px; resize: vertical; }
-.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-.fmt-opts { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.5rem; }
-.fopt { padding: 0.55rem; text-align: center; cursor: pointer; background-color: #ffffff; border: 2px solid #d4d4dc; border-radius: 8px; font-size: 0.8rem; font-weight: 600; color: #0E1F3B; transition: all 0.15s; user-select: none; }
-.fopt:hover { border-color: #0E1F3B; }
-.fopt.on { background-color: #0E1F3B; color: #ffffff; border-color: #0E1F3B; }
+.detail-layout { display: grid; grid-template-columns: 1fr 360px; gap: 32px; align-items: start; }
+.detail-main-col { min-width: 0; }
+.detail-sidebar { position: sticky; top: calc(var(–nav-h) + 16px); }
 
-.w-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid #e0e0e8; }
-.w-back { background: none; border: none; font-size: 0.85rem; color: #6a6a75; transition: color 0.2s; }
-.w-back:hover { color: #0E1F3B; }
-.w-next { background-color: #0E1F3B; color: #ffffff; border: none; padding: 0.65rem 1.6rem; border-radius: 100px; font-size: 0.86rem; font-weight: 600; transition: background-color 0.2s; }
-.w-next:hover { background-color: #C8392B; }
-.w-next:disabled { background-color: #cccccc; cursor: not-allowed; }
+/* Gallery */
+.gallery { border-radius: var(–rc); overflow: hidden; background: #0d0f18; margin-bottom: 20px; }
+.gallery-main { width: 100%; height: 400px; position: relative; cursor: zoom-in; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.gallery-main svg { width: 100%; height: 100%; }
+.gallery-count { position: absolute; bottom: 16px; right: 16px; background: rgba(0,0,0,.6); backdrop-filter: blur(6px); color: white; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 8px; }
+.gallery-nav-btns { position: absolute; top: 50%; transform: translateY(-50%); width: 100%; display: flex; justify-content: space-between; padding: 0 14px; }
+.gnav { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.88); backdrop-filter: blur(4px); font-size: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 12px rgba(0,0,0,.2); transition: all .15s; }
+.gnav:hover { background: var(–gold); }
+.thumbstrip { display: flex; gap: 10px; padding: 14px; background: #13161f; }
+.thumb { width: 88px; height: 64px; border-radius: 9px; border: 2px solid transparent; cursor: pointer; overflow: hidden; flex-shrink: 0; transition: all .15s; }
+.thumb svg { width: 88px; height: 64px; display: block; }
+.thumb.on { border-color: var(–gold); }
+.thumb:not(.on) { opacity: .5; }
+.thumb:hover { opacity: 1; }
 
-.success-wrap { text-align: center; padding: 2.5rem 1rem; }
-.success-icon { font-size: 3rem; display: block; margin-bottom: 1rem; }
-.success-title { font-family: ‘Cormorant Garamond’, serif; font-size: 2rem; font-weight: 300; color: #0E1F3B; margin-bottom: 0.5rem; }
-.success-sub { font-size: 0.88rem; color: #3a3a45; line-height: 1.7; }
-.confirm-box { background-color: #f5f5fa; border: 1.5px solid #d4d4dc; border-radius: 14px; padding: 1.4rem; margin: 1.5rem 0; text-align: left; }
-.crow { display: flex; gap: 1rem; font-size: 0.84rem; padding: 0.35rem 0; border-bottom: 1px solid #e0e0e8; }
-.crow:last-child { border-bottom: none; }
-.ck { min-width: 75px; color: #6a6a75; font-weight: 600; flex-shrink: 0; }
-.cv { color: #0E1F3B; font-weight: 700; }
+/* Detail title area */
+.detail-head { background: white; border-radius: var(–rc); padding: 24px; margin-bottom: 16px; border: 1px solid var(–border); }
+.detail-badges { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.d-feat { background: var(–gold); color: var(–charcoal); font-size: 11px; font-weight: 800; letter-spacing: .05em; padding: 4px 12px; border-radius: 100px; text-transform: uppercase; }
+.d-meta { font-size: 13px; color: var(–mid); display: flex; align-items: center; gap: 4px; }
+.d-name { font-size: 28px; font-weight: 900; letter-spacing: -.8px; margin-bottom: 8px; }
+.d-price { font-size: 36px; font-weight: 900; letter-spacing: -1.5px; color: var(–charcoal); }
 
-/* FOOTER */
-.footer { border-top: 1px solid #d4d4dc; padding: 2.5rem 5vw; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; background: #ffffff; }
-.footer-logo { display: flex; align-items: baseline; }
-.footer-logo .m { font-family: ‘Cormorant Garamond’, serif; font-style: italic; font-weight: 300; font-size: 1.1rem; color: #C8392B; }
-.footer-logo .g { font-family: ‘Figtree’, sans-serif; font-weight: 700; font-size: 0.9rem; color: #0E1F3B; }
-.footer-copy { font-size: 0.78rem; color: #6a6a75; }
-.footer-links { display: flex; gap: 1.8rem; }
-.footer-links a { font-size: 0.78rem; color: #6a6a75; text-decoration: none; }
-.footer-links a:hover { color: #0E1F3B; }
+/* Quick specs */
+.quick-specs { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 16px; }
+.qs { background: white; border-radius: 12px; padding: 16px; border: 1px solid var(–border); display: flex; align-items: center; gap: 12px; }
+.qs-icon { font-size: 22px; }
+.qs-l { font-size: 11px; color: var(–light); font-weight: 500; margin-bottom: 3px; }
+.qs-v { font-size: 15px; font-weight: 700; }
 
-/* ADMIN LOGIN */
-.login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #ffffff; padding: 2rem; }
-.login-card { width: 100%; max-width: 380px; border: 1.5px solid #d4d4dc; border-radius: 20px; padding: 2.5rem; background: #ffffff; box-shadow: 0 4px 32px rgba(0,0,0,0.06); }
-.login-logo { display: flex; align-items: baseline; margin-bottom: 0.3rem; }
-.login-logo .m { font-family: ‘Cormorant Garamond’, serif; font-style: italic; font-weight: 300; font-size: 1.5rem; color: #C8392B; }
-.login-logo .g { font-family: ‘Figtree’, sans-serif; font-weight: 700; font-size: 1.2rem; color: #0E1F3B; }
-.login-sub { font-size: 0.82rem; color: #3a3a45; margin-bottom: 2rem; }
-.login-err { background: #fff0f0; border: 1px solid #ffbbbb; border-radius: 8px; padding: 0.65rem 1rem; font-size: 0.82rem; color: #C8392B; margin-bottom: 0.8rem; display: none; }
-.login-back { display: block; margin-top: 0.8rem; background: none; border: none; font-size: 0.76rem; color: #6a6a75; text-decoration: underline; }
-.login-back:hover { color: #0E1F3B; }
-.btn-full { display: block; width: 100%; padding: 0.8rem; background-color: #0E1F3B; color: #ffffff; border: none; border-radius: 10px; font-size: 0.9rem; font-weight: 600; margin-top: 1rem; transition: background-color 0.2s; }
-.btn-full:hover { background-color: #C8392B; }
+/* Detail sections */
+.d-card { background: white; border-radius: var(–rc); border: 1px solid var(–border); padding: 24px; margin-bottom: 16px; }
+.d-card-title { font-size: 18px; font-weight: 800; letter-spacing: -.4px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(–border); }
+.d-desc { font-size: 15px; line-height: 1.75; color: #374151; }
+.equip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.equip-item { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+.equip-dot { width: 8px; height: 8px; border-radius: 50%; background: var(–gold); flex-shrink: 0; }
+.specs-table { width: 100%; border-collapse: collapse; }
+.specs-table tr { border-bottom: 1px solid var(–border); }
+.specs-table tr:last-child { border-bottom: none; }
+.specs-table tr:nth-child(even) { background: var(–off); }
+.specs-table td { padding: 12px 16px; font-size: 14px; }
+.specs-table td:first-child { color: var(–mid); font-weight: 500; width: 40%; }
+.specs-table td:last-child { font-weight: 700; }
 
-/* ADMIN PANEL */
-.admin-page { background: #ffffff; min-height: 100vh; }
-.admin-nav { height: 52px; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid #d4d4dc; }
-.admin-logo { display: flex; align-items: baseline; gap: 0.6rem; }
-.admin-logo .m { font-family: ‘Cormorant Garamond’, serif; font-style: italic; color: #C8392B; font-size: 1.1rem; }
-.admin-logo .g { font-family: ‘Figtree’, sans-serif; font-weight: 700; font-size: 0.9rem; color: #0E1F3B; }
-.admin-badge { font-size: 0.68rem; background: #f0f0f5; border: 1px solid #d4d4dc; color: #6a6a75; padding: 0.18rem 0.55rem; border-radius: 100px; font-weight: 600; }
-.a-tabs { display: flex; gap: 0.3rem; }
-.a-tab { background: none; border: none; font-size: 0.8rem; font-weight: 600; color: #6a6a75; padding: 0.4rem 0.9rem; border-radius: 8px; transition: all 0.15s; }
-.a-tab.on, .a-tab:hover { background-color: #f0f0f5; color: #0E1F3B; }
-.a-btn { background: none; border: 1.5px solid #d4d4dc; border-radius: 8px; font-size: 0.76rem; color: #6a6a75; padding: 0.3rem 0.8rem; transition: all 0.15s; }
-.a-btn:hover { border-color: #C8392B; color: #C8392B; }
-.admin-body { padding: 2rem; max-width: 1180px; margin: 0 auto; }
-.admin-sec { display: none; }
-.admin-sec.on { display: block; }
-.stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-bottom: 2rem; }
-.stat-card { background: #ffffff; border: 1.5px solid #d4d4dc; border-radius: 14px; padding: 1.5rem; }
-.stat-n { font-family: ‘Cormorant Garamond’, serif; font-size: 2.2rem; font-weight: 300; color: #0E1F3B; line-height: 1; }
-.stat-n.red { color: #C8392B; }
-.stat-l { font-size: 0.76rem; color: #3a3a45; margin-top: 0.3rem; font-weight: 600; }
-.a-card { background: #ffffff; border: 1.5px solid #d4d4dc; border-radius: 16px; overflow: hidden; margin-bottom: 1.5rem; }
-.a-card-hd { padding: 1.1rem 1.5rem; border-bottom: 1px solid #d4d4dc; display: flex; align-items: center; justify-content: space-between; }
-.a-card-hd h3 { font-family: ‘Cormorant Garamond’, serif; font-size: 1.15rem; font-weight: 400; color: #0E1F3B; }
-.a-export { display: inline-block; background: #ffffff; color: #0E1F3B; font-size: 0.78rem; font-weight: 600; padding: 0.4rem 1rem; border-radius: 100px; border: 2px solid #0E1F3B; transition: all 0.2s; }
-.a-export:hover { background: #0E1F3B; color: #ffffff; }
-.dtable { width: 100%; border-collapse: collapse; }
-.dtable th { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: #3a3a45; padding: 0.8rem 1.2rem; text-align: left; border-bottom: 1.5px solid #d4d4dc; background: #f5f5fa; }
-.dtable td { font-size: 0.83rem; color: #111118; padding: 0.85rem 1.2rem; border-bottom: 1px solid #eeeeee; vertical-align: top; }
-.dtable tr:last-child td { border-bottom: none; }
-.dtable tr:hover td { background: #fafafa; }
-.badge { display: inline-block; font-size: 0.67rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.22rem 0.6rem; border-radius: 100px; }
-.b-new { background: #ddeeff; color: #003399; }
-.b-confirmed { background: #ddffdd; color: #116611; }
-.b-cancelled { background: #ffdddd; color: #aa1100; }
-.act { background: none; border: 1.5px solid #d4d4dc; border-radius: 6px; padding: 0.25rem 0.6rem; font-size: 0.73rem; color: #3a3a45; transition: all 0.15s; margin-right: 0.3rem; }
-.act:hover { border-color: #0E1F3B; color: #0E1F3B; }
-.act.del:hover { border-color: #C8392B; color: #C8392B; }
-.sched-wrap { display: grid; grid-template-columns: 1fr 1.3fr; gap: 1.5rem; }
-.day-card { border: 1.5px solid #d4d4dc; border-radius: 12px; padding: 1rem 1.2rem; margin-bottom: 0.7rem; background: #ffffff; }
-.day-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
-.day-name { font-size: 0.88rem; font-weight: 700; color: #0E1F3B; }
-.tog { position: relative; width: 38px; height: 22px; background-color: #d4d4dc; border-radius: 100px; border: none; transition: background-color 0.2s; flex-shrink: 0; }
-.tog.on { background-color: #0E1F3B; }
-.tog::after { content: ‘’; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #ffffff; transition: transform 0.2s; }
-.tog.on::after { transform: translateX(16px); }
-.slot-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.6rem; }
-.slot-chip { display: flex; align-items: center; gap: 0.35rem; background: #eeeef5; border-radius: 6px; padding: 0.28rem 0.65rem; font-size: 0.78rem; color: #0E1F3B; font-weight: 700; }
-.chip-rm { background: none; border: none; color: #6a6a75; font-size: 0.9rem; padding: 0; line-height: 1; }
-.chip-rm:hover { color: #C8392B; }
-.day-add { display: flex; gap: 0.5rem; margin-top: 0.4rem; }
-.day-add input { flex: 1; padding: 0.42rem 0.7rem; border: 1.5px solid #d4d4dc; border-radius: 8px; font-size: 0.82rem; color: #111118; background: #ffffff; outline: none; }
-.day-add input:focus { border-color: #0E1F3B; }
-.day-add button { background-color: #0E1F3B; color: #ffffff; border: none; border-radius: 8px; padding: 0.42rem 0.9rem; font-size: 0.8rem; font-weight: 600; transition: background-color 0.15s; }
-.day-add button:hover { background-color: #C8392B; }
-.day-off { font-size: 0.76rem; color: #6a6a75; padding: 0.2rem 0; }
-.prev-day { margin-bottom: 1.2rem; }
-.prev-day-name { font-size: 0.78rem; font-weight: 700; color: #0E1F3B; margin-bottom: 0.4rem; }
-.prev-slots { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-.prev-slot { background: #eeeef5; border-radius: 6px; padding: 0.28rem 0.6rem; font-size: 0.77rem; color: #0E1F3B; font-weight: 700; }
+/* Sidebar */
+.sidebar-price-card { background: var(–charcoal); border-radius: var(–rc); padding: 24px; margin-bottom: 16px; border-bottom: 3px solid var(–gold); }
+.sb-price { font-size: 34px; font-weight: 900; letter-spacing: -1.5px; color: var(–gold); margin-bottom: 16px; }
+.sb-btn-primary { width: 100%; background: var(–gold); color: var(–charcoal); border-radius: 11px; padding: 15px; font-size: 16px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; transition: background .15s; }
+.sb-btn-primary:hover { background: var(–gold-d); }
+.sb-btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.sb-btn-sec { background: rgba(255,255,255,.08); border: 1.5px solid rgba(255,255,255,.15); border-radius: 10px; padding: 11px; font-size: 13px; font-weight: 600; color: white; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all .15s; }
+.sb-btn-sec:hover { background: rgba(255,255,255,.15); }
 
-.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-.reveal.in { opacity: 1; transform: none; }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+.vendor-card { background: white; border-radius: var(–rc); border: 1px solid var(–border); padding: 20px; margin-bottom: 16px; }
+.vendor-title { font-size: 14px; font-weight: 800; letter-spacing: -.2px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(–border); }
+.vendor-row { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.vendor-ava { width: 52px; height: 52px; border-radius: 50%; background: var(–charcoal); color: var(–gold); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; flex-shrink: 0; border: 2px solid var(–gold); }
+.vendor-name { font-size: 15px; font-weight: 800; margin-bottom: 2px; }
+.vendor-since { font-size: 12px; color: var(–light); }
+.vendor-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.vstat { background: var(–off); border-radius: 10px; padding: 12px; }
+.vstat-n { font-size: 20px; font-weight: 900; letter-spacing: -.5px; margin-bottom: 1px; }
+.vstat-l { font-size: 11px; color: var(–light); }
+.vendor-loc { font-size: 13px; color: var(–mid); margin-bottom: 16px; display: flex; align-items: center; gap: 6px; }
+.vendor-actions { display: flex; flex-direction: column; gap: 10px; }
+.va-primary { width: 100%; background: var(–gold); color: var(–charcoal); border-radius: 10px; padding: 13px; font-size: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background .15s; }
+.va-primary:hover { background: var(–gold-d); }
+.va-sec { width: 100%; background: white; border: 1.5px solid var(–border); border-radius: 10px; padding: 12px; font-size: 14px; font-weight: 600; color: var(–text); display: flex; align-items: center; justify-content: center; gap: 8px; transition: all .15s; }
+.va-sec:hover { border-color: var(–charcoal); background: var(–off); }
+.va-share { text-align: center; font-size: 13px; color: var(–mid); font-weight: 600; cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; gap: 6px; }
 
-@media (max-width: 860px) {
+/* ════════════════════════════════════════
+PUBLISH CAR PAGE
+════════════════════════════════════════ */
+.publish-wrap { max-width: 860px; margin: 0 auto; padding: 40px 32px; }
+.pub-header { margin-bottom: 32px; }
+.pub-title { font-size: 32px; font-weight: 900; letter-spacing: -.8px; margin-bottom: 6px; }
+.pub-sub { font-size: 15px; color: var(–mid); }
+.pub-step { background: white; border-radius: var(–rc); border: 1px solid var(–border); padding: 28px; margin-bottom: 16px; }
+.pub-step-title { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: var(–charcoal); margin-bottom: 22px; display: flex; align-items: center; gap: 10px; }
+.step-num { width: 26px; height: 26px; border-radius: 50%; background: var(–gold); color: var(–charcoal); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; flex-shrink: 0; }
+.pub-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.pub-field:last-child { margin-bottom: 0; }
+.pub-label { font-size: 13px; font-weight: 700; color: #374151; }
+.pub-label .req { color: var(–danger); }
+.pub-input, .pub-select, .pub-textarea {
+background: var(–off); border: 1.5px solid var(–border);
+border-radius: var(–ri); padding: 12px 14px; font-size: 14px;
+color: var(–text); width: 100%; transition: all .2s;
+}
+.pub-select { appearance: none; -webkit-appearance: none;
+background-image: url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘12’ height=‘8’%3E%3Cpath d=‘M1 1l5 5 5-5’ stroke=’%236B7280’ stroke-width=‘1.5’ fill=‘none’ stroke-linecap=‘round’/%3E%3C/svg%3E”);
+background-repeat: no-repeat; background-position: right 14px center; background-color: var(–off);
+}
+.pub-textarea { height: 110px; resize: vertical; line-height: 1.6; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.price-wrap { position: relative; }
+.price-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 15px; font-weight: 700; color: var(–mid); pointer-events: none; }
+.price-input { padding-left: 26px !important; font-size: 15px; font-weight: 700; }
+.toggle-row { display: flex; align-items: center; justify-content: space-between; background: var(–off); border-radius: var(–ri); padding: 14px 16px; border: 1.5px solid var(–border); }
+.toggle-label { font-size: 14px; font-weight: 700; }
+.toggle-sub { font-size: 12px; color: var(–light); margin-top: 2px; }
+.toggle-sw { width: 48px; height: 28px; border-radius: 14px; position: relative; cursor: pointer; transition: background .2s; flex-shrink: 0; }
+.toggle-sw .dot { position: absolute; width: 22px; height: 22px; border-radius: 50%; background: white; top: 3px; transition: left .2s; box-shadow: 0 1px 4px rgba(0,0,0,.2); }
+.toggle-sw.on { background: var(–gold); }
+.toggle-sw.on .dot { left: 23px; }
+.toggle-sw.off { background: #d1d5db; }
+.toggle-sw.off .dot { left: 3px; }
+.upload-zone { border: 2px dashed var(–gold); border-radius: 14px; padding: 40px 24px; text-align: center; background: var(–gold-light); cursor: pointer; transition: all .2s; margin-bottom: 14px; }
+.upload-zone:hover { background: #fff8cc; border-color: var(–gold-d); }
+.upload-icon { font-size: 36px; margin-bottom: 10px; }
+.upload-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.upload-sub { font-size: 13px; color: var(–mid); line-height: 1.6; }
+.upload-sub strong { color: var(–gold-d); }
+.photo-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.photo-slot { aspect-ratio: 4/3; border-radius: 10px; background: var(–off); border: 1.5px dashed #d1d5db; display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(–light); cursor: pointer; transition: all .15s; }
+.photo-slot:hover { border-color: var(–gold); color: var(–gold-d); background: var(–gold-light); }
+.equip-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.etag { background: var(–off); border: 1.5px solid var(–border); border-radius: 8px; padding: 7px 14px; font-size: 13px; font-weight: 600; color: #374151; cursor: pointer; transition: all .15s; user-select: none; }
+.etag.on { background: rgba(245,197,24,.15); border-color: var(–gold); color: var(–charcoal); }
+.submit-bar { background: white; border-radius: var(–rc); border: 1px solid var(–border); padding: 20px 28px; display: flex; align-items: center; justify-content: space-between; gap: 24px; position: sticky; bottom: 16px; box-shadow: var(–shadow-lg); }
+.submit-note { font-size: 13px; color: var(–mid); }
+.submit-note .req { color: var(–danger); }
+.submit-btn { background: var(–gold); color: var(–charcoal); border-radius: 11px; padding: 15px 40px; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px; transition: background .15s; white-space: nowrap; }
+.submit-btn:hover { background: var(–gold-d); }
+
+/* ════════════════════════════════════════
+RESPONSIVE — TABLET (< 1024px)
+════════════════════════════════════════ */
+@media (max-width: 1024px) {
+.hero-inner { grid-template-columns: 1fr 360px; gap: 40px; }
+.hero-text h1 { font-size: 40px; }
+.car-grid { grid-template-columns: repeat(2, 1fr); }
+.why-grid { grid-template-columns: repeat(2, 1fr); }
+.footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+.detail-layout { grid-template-columns: 1fr 320px; gap: 24px; }
+.quick-specs { grid-template-columns: repeat(2, 1fr); }
+.three-col { grid-template-columns: 1fr 1fr; }
+.photo-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ════════════════════════════════════════
+RESPONSIVE — MOBILE (< 768px)
+════════════════════════════════════════ */
+@media (max-width: 768px) {
+:root { –nav-h: 60px; }
+
+/* Nav — mobile */
+.nav-inner { padding: 0 16px; gap: 0; }
 .nav-links { display: none; }
-.steps { grid-template-columns: 1fr 1fr; }
-.step { border-right: none !important; border-bottom: 1.5px solid #d4d4dc; }
-.step:nth-child(odd) { border-right: 1.5px solid #d4d4dc !important; }
-.grid-3 { grid-template-columns: 1fr 1fr; }
-.grid-3-fmt { grid-template-columns: 1fr; }
-.widget { grid-template-columns: 1fr; }
-.sopt-grid { grid-template-columns: 1fr; }
-.stats-row { grid-template-columns: 1fr 1fr; }
-.sched-wrap { grid-template-columns: 1fr; }
-.row2 { grid-template-columns: 1fr; }
-}
-@media (max-width: 520px) {
-.grid-3 { grid-template-columns: 1fr; }
-.stat-pill { padding: 1rem 1.2rem; min-width: 80px; }
-}
+.nav-search-box { display: none; }
+.nav-right { gap: 10px; }
+.nav-hamburger { display: flex; }
 
-/* PRICING */
-.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3.5rem; }
-.price-card { background: #ffffff; border: 1.5px solid #d4d4dc; border-radius: 20px; overflow: hidden; }
-.price-card-head { background-color: #0E1F3B; padding: 2rem 2rem 1.5rem; }
-.price-cat-icon { font-size: 2rem; margin-bottom: 0.6rem; }
-.price-cat-name { font-family: ‘Cormorant Garamond’, serif; font-size: 1.6rem; font-weight: 300; color: #ffffff; }
-.price-rows { padding: 0.5rem 0; }
-.price-row { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; border-bottom: 1px solid #eeeeee; gap: 1rem; }
-.price-row:last-child { border-bottom: none; }
-.price-row-pop { background-color: #f8f8fc; }
-.price-label { font-size: 0.88rem; color: #3a3a45; font-weight: 400; flex: 1; }
-.price-val { font-family: ‘Cormorant Garamond’, serif; font-size: 1.5rem; font-weight: 600; color: #0E1F3B; white-space: nowrap; line-height: 1; }
-.price-cur { font-family: ‘Figtree’, sans-serif; font-size: 0.72rem; font-weight: 700; color: #C8392B; margin-left: 0.2rem; vertical-align: super; }
-.price-note { font-size: 0.78rem; color: #6a6a75; margin-top: 1.5rem; font-style: italic; }
-@media (max-width: 680px) { .pricing-grid { grid-template-columns: 1fr; } }
+/* Hero — stack vertically */
+.hero { padding: 32px 16px 24px; }
+.hero-inner { grid-template-columns: 1fr; gap: 28px; }
+.hero-text h1 { font-size: 28px; letter-spacing: -1px; }
+.hero-text p { font-size: 14px; margin-bottom: 20px; }
+.hero-stats { gap: 20px; }
+.hero-stat-n { font-size: 22px; }
+.search-card { padding: 20px; border-radius: 14px; }
 
-/* PRICING */
-.pricing-section { padding: 7rem 5vw; background: #ffffff; }
-.pricing-inner { max-width: 1080px; margin: 0 auto; }
-.pricing-hd { margin-bottom: 3.5rem; }
-.pricing-tabs { display: flex; gap: 0.4rem; margin-top: 2rem; background: #f5f5fa; border-radius: 12px; padding: 4px; width: fit-content; }
-.ptab { background: none; border: none; font-size: 0.84rem; font-weight: 600; color: #6a6a75; padding: 0.5rem 1.4rem; border-radius: 9px; transition: all 0.18s; }
-.ptab.on { background: #ffffff; color: #0E1F3B; box-shadow: 0 1px 6px rgba(0,0,0,0.08); }
-.pricing-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-top: 2.5rem; }
-.price-card { border: 1.5px solid #d4d4dc; border-radius: 18px; padding: 2rem 1.6rem; background: #ffffff; transition: all 0.2s; position: relative; }
-.price-card:hover { border-color: #0E1F3B; box-shadow: 0 4px 24px rgba(14,31,59,0.08); transform: translateY(-2px); }
-.price-card.featured { border-color: #0E1F3B; background: #0E1F3B; }
-.price-card.featured .price-name { color: rgba(255,255,255,0.6); }
-.price-card.featured .price-amount { color: #ffffff; }
-.price-card.featured .price-currency { color: rgba(255,255,255,0.7); }
-.price-card.featured .price-desc { color: rgba(255,255,255,0.65); }
-.price-card.featured .price-badge { background: #C8392B; color: #ffffff; }
-.price-badge { display: inline-block; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: #eeeef5; color: #0E1F3B; padding: 0.22rem 0.65rem; border-radius: 100px; margin-bottom: 1.2rem; }
-.price-name { font-family: ‘Cormorant Garamond’, serif; font-size: 1.3rem; font-weight: 400; color: #0E1F3B; margin-bottom: 1.2rem; }
-.price-row { display: flex; align-items: baseline; gap: 0.2rem; margin-bottom: 0.3rem; }
-.price-amount { font-family: ‘Cormorant Garamond’, serif; font-size: 2.6rem; font-weight: 300; color: #0E1F3B; line-height: 1; }
-.price-currency { font-size: 0.9rem; font-weight: 600; color: #6a6a75; margin-left: 0.2rem; }
-.price-desc { font-size: 0.8rem; color: #6a6a75; margin-top: 0.5rem; line-height: 1.5; }
-.price-note { font-size: 0.75rem; color: #6a6a75; margin-top: 2.5rem; }
-@media (max-width: 860px) { .pricing-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 520px) { .pricing-grid { grid-template-columns: 1fr; } .pricing-tabs { flex-wrap: wrap; } }
+/* Stats */
+.stats-inner { padding: 0; }
+.stat-cell { padding: 14px 10px; }
+.stat-n { font-size: 18px; }
+
+/* Listings */
+.page-wrap, .container { padding: 0 16px; }
+.listings-section { padding: 28px 0; }
+.car-grid { grid-template-columns: 1fr; gap: 14px; }
+.car-photo { height: 200px; }
+
+/* Why */
+.why-section { padding: 40px 0; }
+.why-grid { grid-template-columns: 1fr; gap: 12px; }
+.why-item { padding: 18px; }
+
+/* CTA */
+.cta-section { padding: 40px 0; }
+.cta-banner { padding: 28px 24px; grid-template-columns: 1fr; gap: 20px; border-radius: 16px; }
+.cta-text h2 { font-size: 22px; }
+.cta-text p { font-size: 14px; }
+.cta-btn { width: 100%; text-align: center; justify-content: center; }
+
+/* Footer */
+.footer { padding: 36px 0 24px; }
+.footer-grid { grid-template-columns: 1fr; gap: 24px; }
+.footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+
+/* Detail page */
+.detail-wrap { padding: 0; }
+.breadcrumb { padding: 14px 16px; margin-bottom: 0; font-size: 12px; background: white; border-bottom: 1px solid var(–border); }
+.detail-layout { grid-template-columns: 1fr; gap: 0; }
+.detail-sidebar { position: static; }
+.gallery { border-radius: 0; margin-bottom: 0; }
+.gallery-main { height: 240px; }
+.detail-head { border-radius: 0; border-left: none; border-right: none; padding: 16px; margin-bottom: 0; }
+.d-name { font-size: 20px; }
+.d-price { font-size: 26px; }
+.quick-specs { grid-template-columns: repeat(2,1fr); gap: 1px; background: var(–border); border-radius: 0; margin-bottom: 0; }
+.qs { border-radius: 0; padding: 14px 16px; }
+.d-card { border-radius: 0; border-left: none; border-right: none; margin-bottom: 8px; padding: 18px 16px; }
+.equip-grid { grid-template-columns: 1fr; }
+.sidebar-price-card { border-radius: 0; padding: 20px 16px; }
+.vendor-card { border-radius: 0; border-left: none; border-right: none; }
+.sb-price { font-size: 28px; }
+
+/* Publish */
+.publish-wrap { padding: 0 0 120px; }
+.pub-header { padding: 20px 16px 0; margin-bottom: 16px; }
+.pub-title { font-size: 24px; }
+.pub-step { border-radius: 0; border-left: none; border-right: none; padding: 20px 16px; }
+.two-col { grid-template-columns: 1fr; gap: 0; }
+.two-col .pub-field { margin-bottom: 14px; }
+.three-col { grid-template-columns: 1fr; gap: 0; }
+.photo-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.submit-bar { border-radius: 0; border-left: none; border-right: none; bottom: 0; flex-direction: column; padding: 14px 16px 20px; gap: 10px; }
+.submit-note { text-align: center; }
+.submit-btn { width: 100%; justify-content: center; }
+}
 </style>
 
 </head>
 <body>
 
-<!-- ══════════ MAIN SITE ══════════ -->
+<!-- ══════════════════════════════════════
+     NAVIGATION (shared across all pages)
+══════════════════════════════════════ -->
 
-<div id="pg-main" class="page active">
-
-  <nav class="nav">
-    <a href="#" class="logo"><span class="logo-m">math</span><span class="logo-g">magic.</span></a>
-    <ul class="nav-links">
-      <li><a href="#how" data-mk="Како функционира" data-en="How it works">Како функционира</a></li>
-      <li><a href="#subjects" data-mk="Предмети" data-en="Subjects">Предмети</a></li>
-      <li><a href="#pricing" data-mk="Цени" data-en="Pricing">Цени</a></li>
-      <li><a href="#format" data-mk="Формат" data-en="Format">Формат</a></li>
-      <li><a href="#prices" data-mk="Цени" data-en="Prices">Цени</a></li>
-      <li><a href="#book" class="nav-cta" data-mk="Резервирај час" data-en="Book a lesson">Резервирај час</a></li>
-      <li><a href="#" onclick="goAdmin();return false;" style="font-size:0.75rem;color:#999;">Admin</a></li>
-    </ul>
-    <div class="lang-sw">
-      <button class="lang-btn on" onclick="setLang('mk')">МК</button>
-      <button class="lang-btn" onclick="setLang('en')">EN</button>
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showPage('home')">
+      <div class="nav-logo-icon">A</div>
+      <div class="nav-logo-text">Avto<em>pazar24</em></div>
     </div>
-  </nav>
-
-  <!-- HERO -->
-
-  <section class="hero">
-    <div class="hero-chip" data-mk="Осн. 2025 · Скопје" data-en="Estd. 2025 · Skopje">Осн. 2025 · Скопје</div>
-    <div class="hero-wordmark"><span class="m">math</span><span class="g">magic.</span></div>
-    <p class="hero-tagline">Transforming Minds, One Equation at a Time.</p>
-    <div class="hero-btns">
-      <a href="#book" class="btn-solid" data-mk="Резервирај час" data-en="Book a lesson">Резервирај час</a>
-      <a href="#subjects" class="btn-outline" data-mk="Разгледај предмети" data-en="Explore subjects">Разгледај предмети</a>
+    <div class="nav-links">
+      <div class="nav-link on" onclick="showPage('home')">Home</div>
+      <div class="nav-link">Listings</div>
+      <div class="nav-link">Sellers</div>
+      <div class="nav-link">Pricing</div>
+      <div class="nav-link">About</div>
     </div>
-    <div class="hero-stats">
-      <div class="stat-pill"><span class="stat-pill-n">1:1</span><span class="stat-pill-l" data-mk="Индивидуални часови" data-en="Individual sessions">Индивидуални часови</span></div>
-      <div class="stat-pill"><span class="stat-pill-n">2×</span><span class="stat-pill-l" data-mk="Часови во пар" data-en="Pair lessons">Часови во пар</span></div>
-      <div class="stat-pill"><span class="stat-pill-n">100%</span><span class="stat-pill-l" data-mk="Флексибилно работно време" data-en="Flexible schedule">Флексибилно работно време</span></div>
-      <div class="stat-pill"><span class="stat-pill-n">∞</span><span class="stat-pill-l" data-mk="Онлајн или во живо" data-en="Online or in person">Онлајн или во живо</span></div>
+    <div class="nav-right">
+      <input class="nav-search-box" type="text" placeholder="Search make, model..."/>
+      <button class="nav-post-btn" onclick="showPage('publish')">+ Post Free</button>
+      <button class="nav-hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-  </section>
+  </div>
+</nav>
 
-  <div class="divider"></div>
+<!-- ══════════════════════════════════════
+     PAGE: HOMEPAGE
+══════════════════════════════════════ -->
 
-  <!-- HOW IT WORKS -->
+<div class="page active" id="page-home">
 
-  <section class="section" id="how">
-    <div class="section-inner">
-      <span class="sec-label reveal" data-mk="Процес" data-en="Process">Процес</span>
-      <h2 class="sec-title reveal" data-mk="Како функционира" data-en="How it works">Како функционира</h2>
-      <p class="sec-sub reveal" data-mk="Од прва порака до прв час во четири едноставни чекори." data-en="From first message to first lesson in four simple steps.">Од прва порака до прв час во четири едноставни чекори.</p>
-      <div class="steps reveal">
-        <div class="step">
-          <span class="step-n">01</span>
-          <div class="step-t" data-mk="Избери предмет" data-en="Pick a subject">Избери предмет</div>
-          <p class="step-d" data-mk="Избери тема за која ти треба помош — од аритметика до универзитетска анализа." data-en="Choose the topic you need help with — from arithmetic to university-level analysis.">Избери тема со која ти треба помош — од аритметика до универзитетска анализа.</p>
+  <!-- Hero + Search -->
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1>Find Your Perfect<br><em>Vehicle</em> in Macedonia</h1>
+        <p>Browse thousands of verified car listings from trusted sellers across the country. New deals added every day.</p>
+        <div class="hero-stats">
+          <div><div class="hero-stat-n">10,542</div><div class="hero-stat-l">Active Listings</div></div>
+          <div><div class="hero-stat-n">850+</div><div class="hero-stat-l">Verified Sellers</div></div>
+          <div><div class="hero-stat-n">125</div><div class="hero-stat-l">Brands</div></div>
         </div>
-        <div class="step">
-          <span class="step-n">02</span>
-          <div class="step-t" data-mk="Избери термин" data-en="Choose a slot">Избери термин</div>
-          <p class="step-d" data-mk="Прегледај ги слободните датуми и часови и избери го оној кој ти одговара." data-en="Browse available dates and times and pick what works best for you.">Прегледај ги слободните датуми и часови и избери го оној што ти одговара.</p>
-        </div>
-        <div class="step">
-          <span class="step-n">03</span>
-          <div class="step-t" data-mk="Потврди детали" data-en="Confirm details">Потврди детали</div>
-          <p class="step-d" data-mk="Кажи ни го твоето ниво, саканиот формат и евентуални напомени." data-en="Tell us your level, preferred format — online or in person — and any notes.">Кажи ни го твоето ниво, посакуваниот формат и евентуални напомени.</p>
-        </div>
-        <div class="step">
-          <span class="step-n">04</span>
-          <div class="step-t" data-mk="Почни да учиш" data-en="Start learning">Почни да учиш</div>
-          <p class="step-d" data-mk="Потврдуваме во рок од 24 часа. Дојди подготвен и почни да напредуваш." data-en="We confirm within 24 hours. Show up and start making real progress.">Потврдуваме во рок од 24 часа. Дојди и почни да напредуваш.</p>
+      </div>
+      <div class="search-card">
+        <div class="search-card-title">🔍 Search Vehicles</div>
+        <div class="sf">
+          <select class="sf-select"><option value="">Make</option><option>BMW</option><option>Mercedes-Benz</option><option>Audi</option><option>Toyota</option><option>Volkswagen</option><option>Ford</option></select>
+          <select class="sf-select"><option value="">Select model</option></select>
+          <div class="sf-row">
+            <select class="sf-select"><option value="">Year From</option><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option></select>
+            <select class="sf-select"><option value="">Year To</option><option>2022</option><option>2023</option><option>2024</option><option>2025</option></select>
+          </div>
+          <div class="sf-row">
+            <input class="sf-input" type="number" placeholder="Price from (€)"/>
+            <input class="sf-input" type="number" placeholder="Price to (€)"/>
+          </div>
+          <select class="sf-select"><option value="">Fuel type</option><option>Petrol</option><option>Diesel</option><option>Electric</option><option>Hybrid</option></select>
+          <select class="sf-select"><option value="">Transmission</option><option>Automatic</option><option>Manual</option></select>
+          <button class="sf-btn">🔍 Search Vehicles</button>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <div class="divider"></div>
+  <!-- Stats bar -->
 
-  <!-- SUBJECTS -->
-
-  <section class="section" id="subjects">
-    <div class="section-inner">
-      <span class="sec-label reveal" data-mk="Предмети" data-en="Subjects">Предмети</span>
-      <h2 class="sec-title reveal" data-mk="Што покриваме" data-en="What we cover">Што покриваме</h2>
-      <p class="sec-sub reveal" data-mk="Сите возрасти, сите нивоа — од основно до универзитет." data-en="All ages, all levels — from elementary school to university.">Сите возрасти, сите нивоа — од основно до универзитет.</p>
-      <div class="grid-3 reveal">
-        <div class="subj-card">
-          <span class="subj-icon">🔢</span>
-          <div class="subj-name" data-mk="Аритметика и основи" data-en="Arithmetic & Foundations">Аритметика и основи</div>
-          <p class="subj-desc" data-mk="Броеви, дропки, проценти, основни операции. Основите поставени правилно." data-en="Numbers, fractions, percentages, basic operations. The essentials done right.">Броеви, дропки, проценти, основни операции. Основите поставени правилно.</p>
-          <span class="subj-tag" data-mk="Сите возрасти" data-en="All ages">Сите возрасти</span>
-        </div>
-        <div class="subj-card">
-          <span class="subj-icon">📐</span>
-          <div class="subj-name" data-mk="Алгебра и геометрија" data-en="Algebra & Geometry">Алгебра и геометрија</div>
-          <p class="subj-desc" data-mk="Равенки, функции, полиноми, форми и тригонометрија." data-en="Equations, functions, polynomials, shapes and trigonometry.">Равенки, функции, полиноми, форми и тригонометрија.</p>
-          <span class="subj-tag" data-mk="Средно училиште" data-en="Middle & High school">Средно училиште</span>
-        </div>
-        <div class="subj-card">
-          <span class="subj-icon">∫</span>
-          <div class="subj-name" data-mk="Математичка анализа" data-en="Calculus & Analysis">Математичка анализа</div>
-          <p class="subj-desc" data-mk="Граници, изводи, интеграли, редици и серии." data-en="Limits, derivatives, integrals, sequences and series.">Граници, изводи, интеграли, редици и серии.</p>
-          <span class="subj-tag" data-mk="Универзитет" data-en="University level">Универзитет</span>
-        </div>
-        <div class="subj-card">
-          <span class="subj-icon">📊</span>
-          <div class="subj-name" data-mk="Статистика и веројатност" data-en="Statistics & Probability">Статистика и веројатност</div>
-          <p class="subj-desc" data-mk="Податоци, распределби, тестирање хипотези — за секое поле на студии." data-en="Data, distributions, hypothesis testing — for any field of study.">Податоци, распределби, тестирање хипотези — за секое поле на студии.</p>
-          <span class="subj-tag" data-mk="Средно и универзитет" data-en="High school & Uni">Средно и универзитет</span>
-        </div>
-        <div class="subj-card">
-          <span class="subj-icon">🧮</span>
-          <div class="subj-name" data-mk="Линеарна алгебра" data-en="Linear Algebra">Линеарна алгебра</div>
-          <p class="subj-desc" data-mk="Вектори, матрици, сопствени вредности и линеарни системи." data-en="Vectors, matrices, eigenvalues and linear systems.">Вектори, матрици, сопствени вредности и линеарни системи.</p>
-          <span class="subj-tag" data-mk="Универзитет" data-en="University level">Универзитет</span>
-        </div>
-        <div class="subj-card">
-          <span class="subj-icon">🎯</span>
-          <div class="subj-name" data-mk="Подготовка за испит" data-en="Exam Preparation">Подготовка за испит</div>
-          <p class="subj-desc" data-mk="Интензивни сесии насочени кон секој претстоен испит. Без губење време." data-en="Targeted intensive sessions for any upcoming exam. Zero fluff.">Интензивни сесии насочени кон секој претстоен испит. Без губење време.</p>
-          <span class="subj-tag" data-mk="Сите нивоа" data-en="All levels">Сите нивоа</span>
-        </div>
-      </div>
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-cell"><div class="stat-n">10,542</div><div class="stat-l">Active Listings</div></div>
+      <div class="stat-cell"><div class="stat-n">850+</div><div class="stat-l">Verified Sellers</div></div>
+      <div class="stat-cell"><div class="stat-n">125</div><div class="stat-l">Brands Available</div></div>
+      <div class="stat-cell"><div class="stat-n">24/7</div><div class="stat-l">Availability</div></div>
     </div>
-  </section>
+  </div>
 
-  <div class="divider"></div>
+  <!-- Featured listings -->
 
-  <!-- PRICING -->
-
-  <section class="pricing-section" id="pricing">
-    <div class="pricing-inner">
-      <div class="pricing-hd">
-        <span class="sec-label reveal" data-mk="Цени" data-en="Pricing">Цени</span>
-        <h2 class="sec-title reveal" data-mk="Транспарентни цени" data-en="Transparent pricing">Транспарентни цени</h2>
-        <p class="sec-sub reveal" data-mk="Избери пакет кој одговара на твоите потреби. Без скриени трошоци." data-en="Choose the package that fits your needs. No hidden costs.">Избери пакет кој одговара на твоите потреби. Без скриени трошоци.</p>
-        <div class="pricing-tabs reveal">
-          <button class="ptab on" onclick="switchLevel('elem',this)" data-mk="Основно училиште" data-en="Elementary School">Основно училиште</button>
-          <button class="ptab" onclick="switchLevel('high',this)" data-mk="Средно училиште" data-en="High School">Средно училиште</button>
+  <div class="listings-section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Featured Vehicles</div>
+          <div class="section-sub">The newest and best deals on the market</div>
         </div>
+        <div class="see-all-link">See all listings →</div>
       </div>
+      <div class="car-grid">
 
 ```
-  <!-- ELEMENTARY -->
-  <div class="pricing-grid" id="pl-elem">
-    <div class="price-card reveal">
-      <div class="price-badge" data-mk="Еден час" data-en="Single">Еден час</div>
-      <div class="price-name" data-mk="Поединечен час" data-en="Single Lesson">Поединечен час</div>
-      <div class="price-row">
-        <div class="price-amount">400</div>
-        <div class="price-currency">МКД</div>
+    <!-- BMW -->
+    <div class="car-card" onclick="showDetail('bmw')">
+      <div class="car-photo">
+        <svg viewBox="0 0 359 180" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="b1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#111825"/><stop offset="100%" stop-color="#06080f"/></linearGradient><radialGradient id="g1" cx="50%" cy="65%" r="45%"><stop offset="0%" stop-color="rgba(245,197,24,0.1)"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="359" height="180" fill="url(#b1)"/><circle cx="179" cy="110" r="110" fill="url(#g1)"/><path d="M60 135 Q62 105 78 96 L112 86 Q148 76 178 75 Q207 74 242 79 L278 93 Q298 103 306 118 L312 135 Z" fill="#1c1c2e"/><path d="M60 135 Q60 143 67 145 L308 145 Q314 143 312 135 Z" fill="#141422"/><path d="M114 86 Q148 72 178 71 Q208 70 242 77 L235 90 Q207 84 177 85 Q147 86 118 95 Z" fill="rgba(140,190,240,0.28)"/><path d="M80 96 L112 86 L116 90 L84 100 Z" fill="rgba(140,190,240,0.2)"/><path d="M242 79 L278 93 Q298 103 308 116 L295 112 Q278 100 241 91 Z" fill="#16162a"/><ellipse cx="275" cy="140" rx="30" ry="30" fill="#080810"/><ellipse cx="275" cy="140" rx="22" ry="22" fill="#121218"/><ellipse cx="275" cy="140" rx="13" ry="13" fill="#1e1e2c"/><ellipse cx="275" cy="140" rx="6" ry="6" fill="#888"/><line x1="275" y1="127" x2="275" y2="153" stroke="#333" stroke-width="2"/><line x1="262" y1="140" x2="288" y2="140" stroke="#333" stroke-width="2"/><ellipse cx="82" cy="140" rx="30" ry="30" fill="#080810"/><ellipse cx="82" cy="140" rx="22" ry="22" fill="#121218"/><ellipse cx="82" cy="140" rx="13" ry="13" fill="#1e1e2c"/><ellipse cx="82" cy="140" rx="6" ry="6" fill="#888"/><ellipse cx="304" cy="114" rx="11" ry="7" fill="rgba(255,245,200,0.5)"/><rect x="293" y="106" width="14" height="2" rx="1" fill="rgba(255,255,220,0.7)"/><rect x="62" y="111" width="7" height="14" rx="3" fill="rgba(255,40,40,0.6)"/><ellipse cx="179" cy="173" rx="120" ry="5" fill="rgba(28,28,46,0.5)"/></svg>
+        <div class="feat-badge">Featured</div>
+        <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)">♡</button>
+        <div class="photo-count">1 / 3</div>
       </div>
-      <div class="price-desc" data-mk="60 минути · еден час" data-en="60 minutes · one lesson">60 минути · еден час</div>
-    </div>
-    <div class="price-card reveal">
-      <div class="price-badge" data-mk="8 часа / месец" data-en="8 lessons / month">8 часа / месец</div>
-      <div class="price-name" data-mk="Основен пакет" data-en="Basic Package">Основен пакет</div>
-      <div class="price-row">
-        <div class="price-amount">3.100</div>
-        <div class="price-currency">МКД</div>
+      <div class="car-body">
+        <div class="car-name">BMW 530d xDrive</div>
+        <div class="car-price">€45,000</div>
+        <div class="car-specs">
+          <div class="car-spec">🗓 <strong>2023</strong></div>
+          <div class="car-spec">🛣 <strong>25,000 km</strong></div>
+          <div class="car-spec">⛽ <strong>Diesel</strong></div>
+          <div class="car-spec">⚙️ <strong>Automatic</strong></div>
+        </div>
+        <div class="car-location">📍 Skopje</div>
       </div>
-      <div class="price-desc" data-mk="387 МКД по час · заштеди 13%" data-en="387 MKD per lesson · save 13%">387 МКД по час · заштеди 13%</div>
     </div>
-    <div class="price-card featured reveal">
-      <div class="price-badge" data-mk="Најпопуларно" data-en="Most popular">Најпопуларно</div>
-      <div class="price-name" data-mk="Редовен пакет" data-en="Regular Package">Редовен пакет</div>
-      <div class="price-row">
-        <div class="price-amount">4.500</div>
-        <div class="price-currency">МКД</div>
-      </div>
-      <div class="price-desc" data-mk="375 МКД по час · 12 часа месечно" data-en="375 MKD per lesson · 12 lessons/month">375 МКД по час · 12 часа месечно</div>
-    </div>
-    <div class="price-card reveal">
-      <div class="price-badge" data-mk="16 часа / месец" data-en="16 lessons / month">16 часа / месец</div>
-      <div class="price-name" data-mk="Екстра пакет" data-en="Extra Package">Екстра пакет</div>
-      <div class="price-row">
-        <div class="price-amount">5.800</div>
-        <div class="price-currency">МКД</div>
-      </div>
-      <div class="price-desc" data-mk="362 МКД по час · 16 часа месечно" data-en="362 MKD per lesson · 16 lessons/month">362 МКД по час · 16 часа месечно</div>
-    </div>
-  </div>
 
-  <!-- HIGH SCHOOL -->
-  <div class="pricing-grid" id="pl-high" style="display:none;">
-    <div class="price-card reveal">
-      <div class="price-badge" data-mk="Еден час" data-en="Single">Еден час</div>
-      <div class="price-name" data-mk="Поединечен час" data-en="Single Lesson">Поединечен час</div>
-      <div class="price-row">
-        <div class="price-amount">600</div>
-        <div class="price-currency">МКД</div>
+    <!-- Mercedes -->
+    <div class="car-card" onclick="showDetail('merc')">
+      <div class="car-photo" style="background:#1a1a10">
+        <svg viewBox="0 0 359 180" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="b2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a1a10"/><stop offset="100%" stop-color="#0d0d08"/></linearGradient></defs><rect width="359" height="180" fill="url(#b2)"/><path d="M40 138 Q42 100 64 86 L108 73 Q147 62 178 61 Q208 60 252 67 L292 82 Q315 95 322 114 L327 138 Z" fill="#4a3a28"/><path d="M40 138 L327 138 L327 145 L40 145 Z" fill="#3a2c1e"/><path d="M110 73 Q147 59 178 58 Q209 57 252 65 L244 79 Q208 71 176 72 Q144 73 114 83 Z" fill="rgba(160,200,240,0.25)"/><rect x="110" y="57" width="138" height="5" rx="2.5" fill="#6a5a40"/><ellipse cx="282" cy="143" rx="32" ry="32" fill="#111108"/><ellipse cx="282" cy="143" rx="23" ry="23" fill="#1e1e14"/><ellipse cx="282" cy="143" rx="13" ry="13" fill="#2a2a1e"/><ellipse cx="282" cy="143" rx="6" ry="6" fill="#aaa"/><ellipse cx="76" cy="143" rx="32" ry="32" fill="#111108"/><ellipse cx="76" cy="143" rx="23" ry="23" fill="#1e1e14"/><ellipse cx="76" cy="143" rx="13" ry="13" fill="#2a2a1e"/><ellipse cx="76" cy="143" rx="6" ry="6" fill="#aaa"/><ellipse cx="321" cy="113" rx="8" ry="5" fill="rgba(255,255,180,0.7)"/><ellipse cx="178" cy="175" rx="138" ry="5" fill="rgba(0,0,0,0.4)"/></svg>
+        <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)">♡</button>
+        <div class="photo-count">1 / 5</div>
       </div>
-      <div class="price-desc" data-mk="60 минути · еден час" data-en="60 minutes · one lesson">60 минути · еден час</div>
-    </div>
-    <div class="price-card reveal">
-      <div class="price-badge" data-mk="8 часа / месец" data-en="8 lessons / month">8 часа / месец</div>
-      <div class="price-name" data-mk="Основен пакет" data-en="Basic Package">Основен пакет</div>
-      <div class="price-row">
-        <div class="price-amount">4.600</div>
-        <div class="price-currency">МКД</div>
+      <div class="car-body">
+        <div class="car-name">Mercedes-Benz GLE 350d</div>
+        <div class="car-price">€62,000</div>
+        <div class="car-specs">
+          <div class="car-spec">🗓 <strong>2022</strong></div>
+          <div class="car-spec">🛣 <strong>31,000 km</strong></div>
+          <div class="car-spec">⛽ <strong>Diesel</strong></div>
+          <div class="car-spec">⚙️ <strong>Automatic</strong></div>
+        </div>
+        <div class="car-location">📍 Bitola</div>
       </div>
-      <div class="price-desc" data-mk="575 МКД по час · заштеди 4%" data-en="575 MKD per lesson · save 4%">575 МКД по час · заштеди 4%</div>
     </div>
-    <div class="price-card featured reveal">
-      <div class="price-badge" data-mk="Најпопуларно" data-en="Most popular">Најпопуларно</div>
-      <div class="price-name" data-mk="Редовен пакет" data-en="Regular Package">Редовен пакет</div>
-      <div class="price-row">
-        <div class="price-amount">6.800</div>
-        <div class="price-currency">МКД</div>
-      </div>
-      <div class="price-desc" data-mk="566 МКД по час · 12 часа месечно" data-en="566 MKD per lesson · 12 lessons/month">566 МКД по час · 12 часа месечно</div>
-    </div>
-    <div class="price-card reveal">
-      <div class="price-badge" data-mk="16 часа / месец" data-en="16 lessons / month">16 часа / месец</div>
-      <div class="price-name" data-mk="Екстра пакет" data-en="Extra Package">Екстра пакет</div>
-      <div class="price-row">
-        <div class="price-amount">8.800</div>
-        <div class="price-currency">МКД</div>
-      </div>
-      <div class="price-desc" data-mk="550 МКД по час · 16 часа месечно" data-en="550 MKD per lesson · 16 lessons/month">550 МКД по час · 16 часа месечно</div>
-    </div>
-  </div>
 
-  <p class="price-note reveal" data-mk="* Цените важат за индивидуални часови. За часови во пар, контактирајте не." data-en="* Prices apply to individual lessons. For pair lessons, contact us.">* Цените важат за индивидуални часови. За часови во пар, контактирајте не.</p>
+    <!-- Audi -->
+    <div class="car-card" onclick="showDetail('audi')">
+      <div class="car-photo" style="background:#0a0a18">
+        <svg viewBox="0 0 359 180" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="b3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a0a18"/><stop offset="100%" stop-color="#050508"/></linearGradient><radialGradient id="g3" cx="50%" cy="55%" r="50%"><stop offset="0%" stop-color="rgba(180,20,20,0.15)"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="359" height="180" fill="url(#b3)"/><circle cx="179" cy="104" r="120" fill="url(#g3)"/><path d="M50 141 Q52 107 73 94 L116 79 Q152 68 178 67 Q203 66 245 73 L287 89 Q309 100 317 119 L323 141 Z" fill="#8a0010"/><path d="M50 141 L323 141 L323 147 L50 147 Z" fill="#6a000c"/><path d="M118 79 Q152 65 178 64 Q204 63 245 71 L237 85 Q203 78 177 79 Q150 80 122 90 Z" fill="rgba(100,150,200,0.3)"/><ellipse cx="279" cy="144" rx="31" ry="31" fill="#0a0a0a"/><ellipse cx="279" cy="144" rx="22" ry="22" fill="#141414"/><ellipse cx="279" cy="144" rx="13" ry="13" fill="#1e1e1e"/><ellipse cx="279" cy="144" rx="6" ry="6" fill="#999"/><ellipse cx="80" cy="144" rx="31" ry="31" fill="#0a0a0a"/><ellipse cx="80" cy="144" rx="22" ry="22" fill="#141414"/><ellipse cx="80" cy="144" rx="13" ry="13" fill="#1e1e1e"/><ellipse cx="80" cy="144" rx="6" ry="6" fill="#999"/><rect x="307" y="100" width="13" height="3" rx="1.5" fill="rgba(255,255,200,0.8)"/><ellipse cx="178" cy="175" rx="128" ry="5" fill="rgba(138,0,16,0.2)"/><circle cx="298" cy="112" r="5" fill="none" stroke="rgba(200,200,200,0.4)" stroke-width="1.2"/><circle cx="304" cy="112" r="5" fill="none" stroke="rgba(200,200,200,0.4)" stroke-width="1.2"/><circle cx="310" cy="112" r="5" fill="none" stroke="rgba(200,200,200,0.4)" stroke-width="1.2"/><circle cx="316" cy="112" r="5" fill="none" stroke="rgba(200,200,200,0.4)" stroke-width="1.2"/></svg>
+        <div class="feat-badge">Featured</div>
+        <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)">♡</button>
+        <div class="photo-count">1 / 4</div>
+      </div>
+      <div class="car-body">
+        <div class="car-name">Audi RS5</div>
+        <div class="car-price">€68,000</div>
+        <div class="car-specs">
+          <div class="car-spec">🗓 <strong>2024</strong></div>
+          <div class="car-spec">🛣 <strong>8,000 km</strong></div>
+          <div class="car-spec">⛽ <strong>Petrol</strong></div>
+          <div class="car-spec">⚙️ <strong>Automatic</strong></div>
+        </div>
+        <div class="car-location">📍 Skopje</div>
+      </div>
+    </div>
+
+    <!-- VW -->
+    <div class="car-card" onclick="showDetail('vw')">
+      <div class="car-photo" style="background:#e8eaf0">
+        <svg viewBox="0 0 359 180" xmlns="http://www.w3.org/2000/svg"><rect width="359" height="180" fill="#e8eaf0"/><path d="M55 140 Q57 110 75 99 L118 87 Q153 77 178 76 Q204 75 240 81 L276 94 Q295 104 302 121 L306 140 Z" fill="#e0e0e8" stroke="#ccc" stroke-width="1"/><rect x="55" y="124" width="251" height="4" rx="2" fill="#cc0000" opacity="0.7"/><path d="M120 87 Q153 74 178 73 Q204 72 240 79 L234 91 Q203 84 177 85 Q150 86 124 95 Z" fill="rgba(120,160,200,0.3)"/><ellipse cx="270" cy="143" rx="28" ry="28" fill="#222"/><ellipse cx="270" cy="143" rx="19" ry="19" fill="#333"/><ellipse cx="270" cy="143" rx="10" ry="10" fill="#444"/><ellipse cx="270" cy="143" rx="5" ry="5" fill="#999"/><ellipse cx="88" cy="143" rx="28" ry="28" fill="#222"/><ellipse cx="88" cy="143" rx="19" ry="19" fill="#333"/><ellipse cx="88" cy="143" rx="10" ry="10" fill="#444"/><ellipse cx="88" cy="143" rx="5" ry="5" fill="#999"/><ellipse cx="292" cy="112" rx="9" ry="6" fill="rgba(255,240,180,0.5)"/><ellipse cx="178" cy="172" rx="108" ry="4" fill="rgba(0,0,0,0.1)"/><circle cx="294" cy="108" r="6" fill="rgba(0,50,160,0.3)" stroke="rgba(0,50,160,0.5)" stroke-width="1"/></svg>
+        <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)">♡</button>
+        <div class="photo-count">1 / 6</div>
+      </div>
+      <div class="car-body">
+        <div class="car-name">Volkswagen Golf 8 GTI</div>
+        <div class="car-price">€32,000</div>
+        <div class="car-specs">
+          <div class="car-spec">🗓 <strong>2023</strong></div>
+          <div class="car-spec">🛣 <strong>12,000 km</strong></div>
+          <div class="car-spec">⛽ <strong>Petrol</strong></div>
+          <div class="car-spec">⚙️ <strong>Manual</strong></div>
+        </div>
+        <div class="car-location">📍 Ohrid</div>
+      </div>
+    </div>
+
+  </div><!-- /car-grid -->
 </div>
 ```
 
-  </section>
+  </div>
 
-  <div class="divider"></div>
+  <!-- Why section -->
 
-  <!-- FORMAT -->
-
-  <section class="section" id="format">
-    <div class="section-inner">
-      <span class="sec-label reveal" data-mk="Формат" data-en="Format">Формат</span>
-      <h2 class="sec-title reveal" data-mk="Твојот час, на твој начин" data-en="Your lesson, your way">Твојот час, на твој начин</h2>
-      <p class="sec-sub reveal" data-mk="Секоја комбинација на формат и број на ученици функционира." data-en="Every combination of format and group size works.">Секоја комбинација на формат и големина на група работи.</p>
-      <div class="grid-3-fmt reveal">
-        <div class="fmt-card">
-          <span class="fmt-icon">🏠</span>
-          <div class="fmt-title" data-mk="Во живо" data-en="In Person">Во живо</div>
-          <p class="fmt-desc" data-mk="Средба во Скопје. Идеално за фокусирано учење без одвлекување на вниманието." data-en="Meet face-to-face in Skopje. Best for focused, distraction-free learning.">Сретнување во Скопје. Најдобро за фокусирано учење без расеаност.</p>
-        </div>
-        <div class="fmt-card">
-          <span class="fmt-icon">💻</span>
-          <div class="fmt-title" data-mk="Онлајн" data-en="Online">Онлајн</div>
-          <p class="fmt-desc" data-mk="Поврзи се од каде било преку видео повик. Ист квалитет, целосна флексибилност." data-en="Join from anywhere via video call. Same quality, total flexibility.">Поврзи се од каде и да сакаш преку видео повик. Ист квалитет, целосна флексибилност.</p>
-        </div>
-        <div class="fmt-card">
-          <span class="fmt-icon">👥</span>
-          <div class="fmt-title" data-mk="Часови во пар" data-en="Pair Lessons">Часови во пар</div>
-          <p class="fmt-desc" data-mk="Учи со пријател. Исто индивидуално внимание — поделена цена." data-en="Study with a friend. Same personal attention — shared cost.">Учи со пријател. Исто персонализирано внимание — поделена цена.</p>
-        </div>
+  <div class="why-section">
+    <div class="container">
+      <div class="section-header">
+        <div><div class="section-title">Why Avtopazar24?</div><div class="section-sub">The largest vehicle marketplace in Macedonia</div></div>
+      </div>
+      <div class="why-grid">
+        <div class="why-item"><div class="why-icon">🚗</div><div class="why-label">10,000+ Listings</div><div class="why-desc">Largest vehicle selection in the country — updated daily with new arrivals.</div></div>
+        <div class="why-item"><div class="why-icon">🔒</div><div class="why-label">Security</div><div class="why-desc">All sellers are verified. Transactions are safe and transparent.</div></div>
+        <div class="why-item"><div class="why-icon">⚡</div><div class="why-label">Fast & Easy</div><div class="why-desc">Post your vehicle in under 5 minutes and start receiving inquiries.</div></div>
+        <div class="why-item"><div class="why-icon">👥</div><div class="why-label">850+ Sellers</div><div class="why-desc">Private owners and professional dealers all in one marketplace.</div></div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <div class="divider"></div>
+  <!-- CTA banner -->
 
-  <!-- BOOKING -->
-
-  <section class="booking-wrap" id="book">
-    <div class="booking-inner">
-      <div class="booking-hd">
-        <span class="sec-label" data-mk="Резервирај час" data-en="Book a lesson">Резервирај час</span>
-        <h2 class="sec-title" data-mk="Избери термин што ти одговара" data-en="Pick a slot that works for you">Избери термин што ти одговара</h2>
-        <p class="sec-sub" style="margin:0 auto;" data-mk="Потврдено во рок од 24 часа. Без претплата." data-en="Confirmed within 24 hours. No payment upfront.">Потврдено во рок од 24 часа. Без аванс.</p>
-      </div>
-      <div class="widget">
-        <div class="wl">
-          <div class="wl-logo"><span class="m">math</span><span class="g">magic.</span></div>
-          <div class="wl-sub">Скопје · Осн. 2025</div>
-          <div class="wl-info">
-            <div class="wl-row">⏱ <span data-mk="60 мин час" data-en="60 min session">60 мин сесија</span></div>
-            <div class="wl-row">📍 <span data-mk="Онлајн или во живо" data-en="Online or In Person">Онлајн или во живо</span></div>
-            <div class="wl-row">📞 070 565 166</div>
-            <div class="wl-row">📞 071 904 561</div>
-          </div>
-          <div class="wl-sel" id="wlSel">
-            <div class="wl-sel-lbl" data-mk="Предмет" data-en="Subject">Предмет</div>
-            <div class="wl-sel-val" id="wlSubj"></div>
-            <div class="wl-sel-time" id="wlTime"></div>
-          </div>
+  <div class="cta-section">
+    <div class="container">
+      <div class="cta-banner">
+        <div class="cta-text">
+          <h2>Ready to Sell Your Vehicle?</h2>
+          <p>Post a free listing and reach thousands of potential buyers across Macedonia.</p>
         </div>
-        <div class="wr">
-          <div class="w-prog"><div class="w-pd" id="pd0"></div><div class="w-pd" id="pd1"></div><div class="w-pd" id="pd2"></div></div>
+        <button class="cta-btn" onclick="showPage('publish')">Post Free Listing →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+
+  <div class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo"><div class="footer-logo-icon">A</div><div class="footer-logo-text">Avtopazar24</div></div>
+          <div class="footer-tagline">The largest vehicle marketplace in Macedonia. Find your perfect car today.</div>
+          <div class="footer-socials"><div class="footer-social">f</div><div class="footer-social">📷</div><div class="footer-social">in</div></div>
+        </div>
+        <div>
+          <div class="footer-col-title">Quick Links</div>
+          <ul class="footer-links"><li>Search Vehicles</li><li>Post Listing</li><li>Pricing</li><li>About Us</li></ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Support</div>
+          <ul class="footer-links"><li>Contact</li><li>FAQ</li><li>Terms of Service</li><li>Privacy Policy</li></ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Contact</div>
+          <ul class="footer-links"><li>📧 info@avtopazar24.mk</li><li>📞 +389 2 000 0000</li><li>⏰ Mon–Fri: 9AM–6PM</li></ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2026 Avtopazar24. All Rights Reserved.</div>
+        <div class="footer-copy">Made in Macedonia 🇲🇰</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-home -->
+
+<!-- ══════════════════════════════════════
+     PAGE: CAR DETAIL
+══════════════════════════════════════ -->
+
+<div class="page" id="page-detail">
+  <div class="detail-wrap">
+    <div class="breadcrumb">
+      <span onclick="showPage('home')">Home</span>
+      <span class="sep">›</span>
+      <span onclick="showPage('home')">Listings</span>
+      <span class="sep">›</span>
+      <span class="current" id="breadcrumbName">BMW 530d xDrive</span>
+    </div>
 
 ```
-      <!-- S1 -->
-      <div class="wstep active" id="ws1">
-        <div class="ws-title" data-mk="Избери предмет" data-en="Choose a subject">Избери предмет</div>
-        <div class="ws-sub" data-mk="Со што ти треба помош?" data-en="What do you need help with?">Со што ти треба помош?</div>
-        <div class="sopt-grid" id="soptGrid"></div>
-        <div class="w-nav"><div></div><button class="w-next" id="s1btn" disabled onclick="goStep(2)" data-mk="Следно →" data-en="Next →">Следно →</button></div>
-      </div>
+<div class="detail-layout">
+  <!-- LEFT: main content -->
+  <div class="detail-main-col">
 
-      <!-- S2 -->
-      <div class="wstep" id="ws2">
-        <div class="ws-title" data-mk="Избери датум и час" data-en="Pick a date & time">Избери датум и час</div>
-        <div class="ws-sub" data-mk="Истакнати се деновите со слободни термини." data-en="Days with available slots are highlighted.">Истакнати се деновите со слободни термини.</div>
-        <div class="cal-head">
-          <button class="cal-arrow" onclick="shiftMonth(-1)">‹</button>
-          <div class="cal-title" id="calTitle"></div>
-          <button class="cal-arrow" onclick="shiftMonth(1)">›</button>
-        </div>
-        <div class="cal-grid" id="calGrid"></div>
-        <div class="time-sec" id="timeSec" style="display:none;">
-          <div class="time-lbl" data-mk="Слободни термини" data-en="Available times">Слободни термини</div>
-          <div class="time-grid" id="timeGrid"></div>
-        </div>
-        <div class="w-nav">
-          <button class="w-back" onclick="goStep(1)" data-mk="← Назад" data-en="← Back">← Назад</button>
-          <button class="w-next" id="s2btn" disabled onclick="goStep(3)" data-mk="Следно →" data-en="Next →">Следно →</button>
+    <!-- Gallery -->
+    <div class="gallery">
+      <div class="gallery-main" id="galMain">
+        <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="dg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#111825"/><stop offset="100%" stop-color="#060810"/></linearGradient><radialGradient id="dgl" cx="50%" cy="65%" r="45%"><stop offset="0%" stop-color="rgba(245,197,24,0.1)"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="800" height="400" fill="url(#dg)"/><circle cx="400" cy="260" r="260" fill="url(#dgl)"/><path d="M100 300 Q105 228 150 204 L240 178 Q318 158 380 156 Q442 154 520 164 L606 192 Q648 212 662 244 L672 300 Z" fill="#1c1c2e"/><path d="M100 300 Q100 318 112 322 L660 322 Q672 318 670 300 Z" fill="#141422"/><path d="M242 178 Q318 152 382 150 Q445 148 520 162 L506 186 Q443 172 378 174 Q314 176 250 196 Z" fill="rgba(140,190,240,0.28)"/><path d="M154 204 L240 178 L248 184 L162 210 Z" fill="rgba(140,190,240,0.2)"/><path d="M520 164 L606 192 Q648 212 664 242 L640 234 Q616 212 518 186 Z" fill="#161628"/><ellipse cx="598" cy="308" rx="62" ry="62" fill="#080810"/><ellipse cx="598" cy="308" rx="46" ry="46" fill="#12121e"/><ellipse cx="598" cy="308" rx="28" ry="28" fill="#1e1e2e"/><ellipse cx="598" cy="308" rx="12" ry="12" fill="#888"/><line x1="598" y1="280" x2="598" y2="336" stroke="#333" stroke-width="4"/><line x1="570" y1="308" x2="626" y2="308" stroke="#333" stroke-width="4"/><line x1="578" y1="288" x2="618" y2="328" stroke="#333" stroke-width="2.5"/><line x1="618" y1="288" x2="578" y2="328" stroke="#333" stroke-width="2.5"/><ellipse cx="162" cy="308" rx="62" ry="62" fill="#080810"/><ellipse cx="162" cy="308" rx="46" ry="46" fill="#12121e"/><ellipse cx="162" cy="308" rx="28" ry="28" fill="#1e1e2e"/><ellipse cx="162" cy="308" rx="12" ry="12" fill="#888"/><line x1="162" y1="280" x2="162" y2="336" stroke="#333" stroke-width="4"/><line x1="134" y1="308" x2="190" y2="308" stroke="#333" stroke-width="4"/><ellipse cx="658" cy="244" rx="22" ry="14" fill="rgba(255,245,200,0.5)"/><ellipse cx="658" cy="244" rx="11" ry="8" fill="rgba(255,255,210,0.85)"/><rect x="638" y="228" width="26" height="4" rx="2" fill="rgba(255,255,220,0.7)"/><rect x="104" y="254" width="14" height="28" rx="5" fill="rgba(255,40,40,0.6)"/><ellipse cx="640" cy="266" rx="14" ry="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/><ellipse cx="656" cy="266" rx="14" ry="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/><ellipse cx="400" cy="370" rx="270" ry="10" fill="rgba(28,28,46,0.5)"/></svg>
+        <div class="gallery-count" id="galCount">1 / 3</div>
+        <div class="gallery-nav-btns">
+          <button class="gnav" onclick="galNav(-1)">‹</button>
+          <button class="gnav" onclick="galNav(1)">›</button>
         </div>
       </div>
-
-      <!-- S3 -->
-      <div class="wstep" id="ws3">
-        <div class="ws-title" data-mk="Твоите детали" data-en="Your details">Твоите детали</div>
-        <div class="ws-sub" data-mk="Уште малку — само неколку податоци." data-en="Almost there — just a few things.">Уште малку — само неколку работи.</div>
-        <div class="form-wrap">
-          <div class="row2">
-            <div class="field"><label data-mk="Име *" data-en="First name *">Име *</label><input id="ff" type="text" placeholder="Ана"/></div>
-            <div class="field"><label data-mk="Презиме *" data-en="Last name *">Презиме *</label><input id="fl" type="text" placeholder="Петровска"/></div>
-          </div>
-          <div class="field"><label data-mk="Е-пошта *" data-en="Email *">Е-пошта *</label><input id="fe" type="email" placeholder="ana@primer.com"/></div>
-          <div class="field"><label data-mk="Телефон (опционално)" data-en="Phone (optional)">Телефон (опционално)</label><input id="fp" type="tel" placeholder="070 …"/></div>
-          <div class="field">
-            <label data-mk="Саканиот формат" data-en="Preferred format">Саканиот формат</label>
-            <div class="fmt-opts">
-              <div class="fopt on" onclick="pickFmt(this,'Онлајн')" data-mk="💻 Онлајн" data-en="💻 Online">💻 Онлајн</div>
-              <div class="fopt" onclick="pickFmt(this,'Во живо')" data-mk="🏠 Во живо" data-en="🏠 In Person">🏠 Во живо</div>
-              <div class="fopt" onclick="pickFmt(this,'Пар')" data-mk="👥 Пар" data-en="👥 Pair">👥 Пар</div>
-            </div>
-          </div>
-          <div class="field"><label data-mk="Забелешки (опционално)" data-en="Notes (optional)">Забелешки (опционално)</label><textarea id="fn2" placeholder="Твоето ниво, претстојниот испит, со што имаш тешкотии…"></textarea></div>
-        </div>
-        <div class="w-nav">
-          <button class="w-back" onclick="goStep(2)" data-mk="← Назад" data-en="← Back">← Назад</button>
-          <button class="w-next" onclick="submitBooking()" data-mk="Потврди резервација ✓" data-en="Confirm booking ✓">Потврди резервација ✓</button>
-        </div>
+      <div class="thumbstrip">
+        <div class="thumb on" onclick="selectThumb(0,this)"><svg viewBox="0 0 88 64" xmlns="http://www.w3.org/2000/svg"><rect width="88" height="64" fill="#111825"/><path d="M10 46 Q11 30 20 26 L32 22 Q44 18 52 18 Q60 18 70 22 L80 30 Q82 35 82 46 Z" fill="#1c1c2e"/><ellipse cx="70" cy="47" rx="12" ry="12" fill="#080810"/><ellipse cx="70" cy="47" rx="6" ry="6" fill="#1e1e2e"/><ellipse cx="18" cy="47" rx="12" ry="12" fill="#080810"/><ellipse cx="18" cy="47" rx="6" ry="6" fill="#1e1e2e"/><ellipse cx="79" cy="34" rx="5" ry="3" fill="rgba(255,245,200,0.7)"/></svg></div>
+        <div class="thumb" onclick="selectThumb(1,this)"><svg viewBox="0 0 88 64" xmlns="http://www.w3.org/2000/svg"><rect width="88" height="64" fill="#1a1410"/><rect x="5" y="20" width="78" height="26" rx="4" fill="#2a2018"/><circle cx="22" cy="44" r="10" fill="none" stroke="#3a3028" stroke-width="2.5"/><circle cx="22" cy="44" r="3" fill="#4a4038"/><line x1="22" y1="34" x2="22" y2="54" stroke="#3a3028" stroke-width="1.5"/><line x1="12" y1="44" x2="32" y2="44" stroke="#3a3028" stroke-width="1.5"/><rect x="40" y="23" width="38" height="18" rx="3" fill="#1a3a5a"/><rect x="42" y="25" width="34" height="14" rx="2" fill="#0d2a4a"/><rect x="5" y="50" width="34" height="10" rx="3" fill="#2a2018"/><rect x="49" y="50" width="34" height="10" rx="3" fill="#2a2018"/></svg></div>
+        <div class="thumb" onclick="selectThumb(2,this)"><svg viewBox="0 0 88 64" xmlns="http://www.w3.org/2000/svg"><rect width="88" height="64" fill="#14181a"/><path d="M7 46 Q8 30 16 26 L28 22 Q40 18 52 18 Q62 18 72 22 L80 30 Q82 36 82 46 Z" fill="#141422"/><rect x="8" y="32" width="12" height="10" rx="2" fill="rgba(255,40,40,0.7)"/><rect x="68" y="32" width="12" height="10" rx="2" fill="rgba(255,40,40,0.7)"/><rect x="32" y="40" width="24" height="6" rx="1" fill="#ccc"/><ellipse cx="20" cy="49" rx="11" ry="11" fill="#080810"/><ellipse cx="20" cy="49" rx="5" ry="5" fill="#1e1e2e"/><ellipse cx="68" cy="49" rx="11" ry="11" fill="#080810"/><ellipse cx="68" cy="49" rx="5" ry="5" fill="#1e1e2e"/></svg></div>
       </div>
+    </div>
 
-      <!-- S4 -->
-      <div class="wstep" id="ws4">
-        <div class="success-wrap">
-          <span class="success-icon">🎉</span>
-          <div class="success-title" data-mk="Резервирано!" data-en="You're booked!">Резервирано!</div>
-          <p class="success-sub" data-mk="Ќе ја потврдиме твојата резервација во рок од 24 часа." data-en="We'll confirm your session within 24 hours.">Ќе ја потврдиме твојата сесија во рок од 24 часа.</p>
-          <div class="confirm-box" id="cbox"></div>
-          <p style="font-size:0.78rem;color:#6a6a75;" data-mk="Прашања? Јави се на 070 565 166 или 071 904 561" data-en="Questions? Call 070 565 166 or 071 904 561">Прашања? Јави се на 070 565 166 или 071 904 561</p>
-          <button class="btn-solid" style="margin-top:1.5rem;" onclick="resetWidget()" data-mk="Резервирај уште еден час" data-en="Book another lesson">Резервирај уште еден час</button>
-        </div>
+    <!-- Title + price -->
+    <div class="detail-head">
+      <div class="detail-badges">
+        <span class="d-feat">Featured</span>
+        <span class="d-meta">📍 Skopje</span>
+        <span class="d-meta">🕐 Posted 2 days ago</span>
+        <span class="d-meta">👁 1,243 views</span>
+      </div>
+      <div class="d-name" id="detailName">BMW 530d xDrive</div>
+      <div class="d-price" id="detailPrice">€45,000</div>
+    </div>
+
+    <!-- Quick specs -->
+    <div class="quick-specs">
+      <div class="qs"><div class="qs-icon">📅</div><div><div class="qs-l">Year</div><div class="qs-v" id="dYear">2023</div></div></div>
+      <div class="qs"><div class="qs-icon">🛣</div><div><div class="qs-l">Kilometers</div><div class="qs-v" id="dKm">25,000 km</div></div></div>
+      <div class="qs"><div class="qs-icon">⛽</div><div><div class="qs-l">Fuel</div><div class="qs-v" id="dFuel">Diesel</div></div></div>
+      <div class="qs"><div class="qs-icon">⚙️</div><div><div class="qs-l">Transmission</div><div class="qs-v" id="dTrans">Automatic</div></div></div>
+    </div>
+
+    <!-- Description -->
+    <div class="d-card">
+      <div class="d-card-title">Description</div>
+      <div class="d-desc">Vehicle in excellent condition, regularly serviced with complete service history. First owner, garaged, no accidents. Full equipment with M package. This is a rare opportunity to own a premium sedan at an exceptional price.</div>
+    </div>
+
+    <!-- Equipment -->
+    <div class="d-card">
+      <div class="d-card-title">Additional Equipment</div>
+      <div class="equip-grid">
+        <div class="equip-item"><div class="equip-dot"></div>Leather Interior</div>
+        <div class="equip-item"><div class="equip-dot"></div>Panoramic Roof</div>
+        <div class="equip-item"><div class="equip-dot"></div>Adaptive LED Headlights</div>
+        <div class="equip-item"><div class="equip-dot"></div>Parking Assistant</div>
+        <div class="equip-item"><div class="equip-dot"></div>Head-Up Display</div>
+        <div class="equip-item"><div class="equip-dot"></div>Harman Kardon Sound</div>
+        <div class="equip-item"><div class="equip-dot"></div>Heated Seats</div>
+        <div class="equip-item"><div class="equip-dot"></div>Electric Seats with Memory</div>
+      </div>
+    </div>
+
+    <!-- Tech specs -->
+    <div class="d-card">
+      <div class="d-card-title">Technical Specifications</div>
+      <table class="specs-table">
+        <tr><td>Make</td><td id="sMake">BMW</td></tr>
+        <tr><td>Model</td><td id="sModel">530d xDrive</td></tr>
+        <tr><td>Year</td><td>2023</td></tr>
+        <tr><td>Mileage</td><td>25,000 km</td></tr>
+        <tr><td>Fuel</td><td>Diesel</td></tr>
+        <tr><td>Transmission</td><td>Automatic</td></tr>
+        <tr><td>Body Type</td><td>Sedan</td></tr>
+        <tr><td>Color</td><td>Blue</td></tr>
+        <tr><td>Doors</td><td>4</td></tr>
+        <tr><td>Seats</td><td>5</td></tr>
+        <tr><td>Power</td><td>286 HP</td></tr>
+        <tr><td>Displacement</td><td>2993 cm³</td></tr>
+      </table>
+    </div>
+
+  </div><!-- /detail-main-col -->
+
+  <!-- RIGHT: sidebar -->
+  <div class="detail-sidebar">
+
+    <!-- Price + CTAs (desktop) -->
+    <div class="sidebar-price-card">
+      <div class="sb-price" id="sbPrice">€45,000</div>
+      <button class="sb-btn-primary">📞 Show Phone</button>
+      <div class="sb-btn-row">
+        <button class="sb-btn-sec">♡ Save</button>
+        <button class="sb-btn-sec">↗ Share</button>
+      </div>
+    </div>
+
+    <!-- Vendor card -->
+    <div class="vendor-card">
+      <div class="vendor-title">Contact Seller</div>
+      <div class="vendor-row">
+        <div class="vendor-ava" id="vendorAvatar">M</div>
+        <div><div class="vendor-name" id="vendorName">Mark Peterson</div><div class="vendor-since">Member since 2020</div></div>
+      </div>
+      <div class="vendor-stats">
+        <div class="vstat"><div class="vstat-n">12</div><div class="vstat-l">Active Listings</div></div>
+        <div class="vstat"><div class="vstat-n">4.8 ★</div><div class="vstat-l">Rating</div></div>
+      </div>
+      <div class="vendor-loc">📍 Skopje</div>
+      <div class="vendor-actions">
+        <button class="va-primary">📞 Show Phone</button>
+        <button class="va-sec">✉️ Send Message</button>
+        <button class="va-sec">📧 Send Email</button>
+        <div class="va-share">↗ Share Listing</div>
+      </div>
+    </div>
+
+  </div><!-- /sidebar -->
+</div><!-- /detail-layout -->
+```
+
+  </div><!-- /detail-wrap -->
+</div><!-- /page-detail -->
+
+<!-- ══════════════════════════════════════
+     PAGE: PUBLISH CAR
+══════════════════════════════════════ -->
+
+<div class="page" id="page-publish">
+  <div class="publish-wrap">
+    <div class="pub-header">
+      <div style="font-size:13px;color:var(--mid);margin-bottom:12px;cursor:pointer" onclick="showPage('home')">‹ Back to home</div>
+      <div class="pub-title">Post a Vehicle</div>
+      <div class="pub-sub">Fill in the details below to publish your free listing</div>
+    </div>
+
+```
+<!-- Step 1: Photos -->
+<div class="pub-step">
+  <div class="pub-step-title"><span class="step-num">1</span> Photos</div>
+  <div class="upload-zone" onclick="alert('File picker would open here')">
+    <div class="upload-icon">📷</div>
+    <div class="upload-title">Upload Vehicle Photos</div>
+    <div class="upload-sub">Click to browse or drag & drop your images here<br><strong>JPG, PNG, WEBP · Max 10MB per photo · Up to 20 photos</strong></div>
+  </div>
+  <div class="photo-grid">
+    <div class="photo-slot">+</div>
+    <div class="photo-slot">+</div>
+    <div class="photo-slot">+</div>
+    <div class="photo-slot">+</div>
+    <div class="photo-slot">+</div>
+  </div>
+</div>
+
+<!-- Step 2: Vehicle details -->
+<div class="pub-step">
+  <div class="pub-step-title"><span class="step-num">2</span> Vehicle Details</div>
+  <div class="two-col">
+    <div class="pub-field"><label class="pub-label">Make <span class="req">*</span></label><select class="pub-select"><option value="">Select make</option><option>BMW</option><option>Mercedes-Benz</option><option>Audi</option><option>Toyota</option><option>Volkswagen</option><option>Ford</option><option>Renault</option><option>Opel</option></select></div>
+    <div class="pub-field"><label class="pub-label">Model <span class="req">*</span></label><select class="pub-select"><option value="">Select model</option></select></div>
+  </div>
+  <div class="three-col">
+    <div class="pub-field"><label class="pub-label">Year <span class="req">*</span></label><input class="pub-input" type="number" placeholder="e.g. 2022"/></div>
+    <div class="pub-field"><label class="pub-label">Body Type <span class="req">*</span></label><select class="pub-select"><option>Sedan</option><option>SUV</option><option>Coupe</option><option>Hatchback</option><option>Estate</option><option>Convertible</option></select></div>
+    <div class="pub-field"><label class="pub-label">Condition <span class="req">*</span></label><select class="pub-select"><option>Used</option><option>New</option><option>Damaged</option></select></div>
+  </div>
+  <div class="three-col">
+    <div class="pub-field"><label class="pub-label">Fuel Type <span class="req">*</span></label><select class="pub-select"><option>Diesel</option><option>Petrol</option><option>Electric</option><option>Hybrid</option><option>LPG</option></select></div>
+    <div class="pub-field"><label class="pub-label">Transmission <span class="req">*</span></label><select class="pub-select"><option>Automatic</option><option>Manual</option><option>Semi-auto</option></select></div>
+    <div class="pub-field"><label class="pub-label">Drive Type</label><select class="pub-select"><option>FWD</option><option>RWD</option><option>AWD / 4WD</option></select></div>
+  </div>
+  <div class="three-col">
+    <div class="pub-field"><label class="pub-label">Mileage (km) <span class="req">*</span></label><input class="pub-input" type="number" placeholder="e.g. 45,000"/></div>
+    <div class="pub-field"><label class="pub-label">Engine (cm³)</label><input class="pub-input" type="number" placeholder="e.g. 1998"/></div>
+    <div class="pub-field"><label class="pub-label">Power (HP)</label><input class="pub-input" type="number" placeholder="e.g. 190"/></div>
+  </div>
+  <div class="three-col">
+    <div class="pub-field"><label class="pub-label">Color</label><input class="pub-input" type="text" placeholder="e.g. Metallic Blue"/></div>
+    <div class="pub-field"><label class="pub-label">Doors</label><select class="pub-select"><option>2</option><option>3</option><option selected>4</option><option>5</option></select></div>
+    <div class="pub-field"><label class="pub-label">Seats</label><select class="pub-select"><option>2</option><option>4</option><option selected>5</option><option>7</option><option>8+</option></select></div>
+  </div>
+</div>
+
+<!-- Step 3: Pricing -->
+<div class="pub-step">
+  <div class="pub-step-title"><span class="step-num">3</span> Pricing</div>
+  <div class="two-col">
+    <div class="pub-field">
+      <label class="pub-label">Price (€) <span class="req">*</span></label>
+      <div class="price-wrap"><span class="price-prefix">€</span><input class="pub-input price-input" type="number" placeholder="0"/></div>
+    </div>
+    <div class="pub-field" style="justify-content:flex-end">
+      <label class="pub-label" style="margin-bottom:auto">&nbsp;</label>
+      <div class="toggle-row">
+        <div><div class="toggle-label">Price Negotiable</div><div class="toggle-sub">Allow buyers to make offers</div></div>
+        <div class="toggle-sw off" onclick="toggleSw(this)"><div class="dot"></div></div>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Step 4: Description -->
+<div class="pub-step">
+  <div class="pub-step-title"><span class="step-num">4</span> Description</div>
+  <div class="pub-field"><label class="pub-label">Listing Title <span class="req">*</span></label><input class="pub-input" type="text" placeholder="e.g. BMW 530d xDrive — Full M Package, First Owner"/></div>
+  <div class="pub-field"><label class="pub-label">Description</label><textarea class="pub-textarea" placeholder="Describe the vehicle condition, history, any extras, reason for sale..."></textarea></div>
+  <div class="pub-field">
+    <label class="pub-label">Additional Equipment</label>
+    <div class="equip-tags" style="margin-top:4px">
+      <div class="etag" onclick="toggleEtag(this)">Leather Interior</div>
+      <div class="etag" onclick="toggleEtag(this)">Panoramic Roof</div>
+      <div class="etag" onclick="toggleEtag(this)">LED Headlights</div>
+      <div class="etag" onclick="toggleEtag(this)">Parking Sensors</div>
+      <div class="etag" onclick="toggleEtag(this)">Reverse Camera</div>
+      <div class="etag" onclick="toggleEtag(this)">Navigation</div>
+      <div class="etag" onclick="toggleEtag(this)">Heated Seats</div>
+      <div class="etag" onclick="toggleEtag(this)">Apple CarPlay</div>
+      <div class="etag" onclick="toggleEtag(this)">Android Auto</div>
+      <div class="etag" onclick="toggleEtag(this)">Head-Up Display</div>
+      <div class="etag" onclick="toggleEtag(this)">360° Camera</div>
+      <div class="etag" onclick="toggleEtag(this)">Keyless Entry</div>
+      <div class="etag" onclick="toggleEtag(this)">Sunroof</div>
+      <div class="etag" onclick="toggleEtag(this)">Cruise Control</div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 5: Location -->
+<div class="pub-step">
+  <div class="pub-step-title"><span class="step-num">5</span> Location</div>
+  <div class="two-col">
+    <div class="pub-field"><label class="pub-label">City <span class="req">*</span></label><select class="pub-select"><option value="">Select city</option><option>Skopje</option><option>Bitola</option><option>Ohrid</option><option>Tetovo</option><option>Kumanovo</option><option>Strumica</option><option>Veles</option><option>Štip</option></select></div>
+    <div class="pub-field"><label class="pub-label">Address / Area</label><input class="pub-input" type="text" placeholder="e.g. Centar, Skopje"/></div>
+  </div>
+</div>
+
+<!-- Step 6: Contact -->
+<div class="pub-step">
+  <div class="pub-step-title"><span class="step-num">6</span> Contact Information</div>
+  <div class="two-col">
+    <div class="pub-field"><label class="pub-label">Phone Number <span class="req">*</span></label><input class="pub-input" type="tel" placeholder="+389 70 000 000"/></div>
+    <div class="pub-field"><label class="pub-label">Email Address</label><input class="pub-input" type="email" placeholder="your@email.com"/></div>
+  </div>
+  <div class="toggle-row" style="max-width:400px">
+    <div><div class="toggle-label">Show Phone Number on Listing</div><div class="toggle-sub">Your number will be visible to all visitors</div></div>
+    <div class="toggle-sw on" onclick="toggleSw(this)"><div class="dot"></div></div>
+  </div>
+</div>
+
+<!-- Sticky submit -->
+<div class="submit-bar">
+  <div class="submit-note"><span class="req">*</span> Required fields &nbsp;·&nbsp; Posting is completely free</div>
+  <button class="submit-btn" onclick="handleSubmit(this)">🚀 Publish Listing</button>
 </div>
 ```
 
-  </section>
-
-  <footer class="footer">
-    <div class="footer-logo"><span class="m">math</span><span class="g">magic.</span></div>
-    <span class="footer-copy">© 2025 mathmagic. · Скопје</span>
-    <ul class="footer-links">
-      <li><a href="#how" data-mk="Како функционира" data-en="How it works">Како функционира</a></li>
-      <li><a href="#subjects" data-mk="Предмети" data-en="Subjects">Предмети</a></li>
-      <li><a href="#pricing" data-mk="Цени" data-en="Pricing">Цени</a></li>
-      <li><a href="#prices" data-mk="Цени" data-en="Prices">Цени</a></li>
-      <li><a href="#book" data-mk="Резервирај" data-en="Book">Резервирај</a></li>
-      <li><a href="#" onclick="goAdmin();return false;">Admin ↗</a></li>
-    </ul>
-  </footer>
-</div>
-
-<!-- ══════════ LOGIN ══════════ -->
-
-<div id="pg-login" class="page">
-  <div class="login-page">
-    <div class="login-card">
-      <div class="login-logo"><span class="m">math</span><span class="g">magic.</span></div>
-      <div class="login-sub">Admin panel · Скопје</div>
-      <div class="login-err" id="loginErr">Погрешна лозинка. Обиди се повторно.</div>
-      <div class="field"><label>Лозинка</label><input id="apw" type="password" placeholder="Внеси лозинка" onkeydown="if(event.key==='Enter')tryLogin()"/></div>
-      <button class="btn-full" onclick="tryLogin()">Најави се</button>
-      <button class="login-back" onclick="showPage('pg-main')">← Назад кон страницата</button>
-    </div>
   </div>
-</div>
-
-<!-- ══════════ ADMIN ══════════ -->
-
-<div id="pg-admin" class="page">
-  <div class="admin-page">
-    <nav class="admin-nav">
-      <div class="admin-logo"><span class="m">math</span><span class="g">magic.</span><span class="admin-badge">Admin</span></div>
-      <div style="display:flex;align-items:center;gap:0.7rem;">
-        <div class="a-tabs">
-          <button class="a-tab on" onclick="aTab('bookings',this)">Резервации</button>
-          <button class="a-tab" onclick="aTab('schedule',this)">Распоред</button>
-        </div>
-        <button class="a-btn" onclick="showPage('pg-main')">← Страница</button>
-        <button class="a-btn" onclick="showPage('pg-main')">Одјави се</button>
-      </div>
-    </nav>
-    <div class="admin-body">
-      <div class="admin-sec on" id="tab-bookings">
-        <div class="stats-row" id="aStats"></div>
-        <div class="a-card">
-          <div class="a-card-hd">
-            <h3>Сите резервации</h3>
-            <button class="a-export" onclick="exportCSV()">Извези CSV</button>
-          </div>
-          <div style="overflow-x:auto;">
-            <table class="dtable">
-              <thead><tr><th>#</th><th>Име</th><th>Предмет</th><th>Датум и час</th><th>Формат</th><th>Контакт</th><th>Статус</th><th>Акции</th></tr></thead>
-              <tbody id="bTable"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="admin-sec" id="tab-schedule">
-        <div class="sched-wrap">
-          <div>
-            <div class="a-card">
-              <div class="a-card-hd"><h3>Неделна достапност</h3></div>
-              <div style="padding:1.2rem 1.5rem;" id="schedBuilder"></div>
-            </div>
-          </div>
-          <div>
-            <div class="a-card">
-              <div class="a-card-hd"><h3>Преглед на претстојната недела</h3></div>
-              <div style="padding:1.2rem 1.5rem;" id="schedPreview"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+</div><!-- /page-publish -->
 
 <script>
-// ── LANGUAGE ──
-let lang = localStorage.getItem('mm_lang') || 'mk';
+/* ── CAR DATA ── */
+const cars = {
+  bmw:  { name:'BMW 530d xDrive',        price:'€45,000', year:'2023', km:'25,000 km', fuel:'Diesel', trans:'Automatic', make:'BMW',           model:'530d xDrive', av:'M', vn:'Mark Peterson' },
+  merc: { name:'Mercedes-Benz GLE 350d', price:'€62,000', year:'2022', km:'31,000 km', fuel:'Diesel', trans:'Automatic', make:'Mercedes-Benz', model:'GLE 350d',    av:'S', vn:'Stefan Novak'  },
+  audi: { name:'Audi RS5',               price:'€68,000', year:'2024', km:'8,000 km',  fuel:'Petrol', trans:'Automatic', make:'Audi',          model:'RS5',         av:'A', vn:'Ana Kovač'     },
+  vw:   { name:'Volkswagen Golf 8 GTI',  price:'€32,000', year:'2023', km:'12,000 km', fuel:'Petrol', trans:'Manual',    make:'Volkswagen',    model:'Golf 8 GTI',  av:'J', vn:'Jan Hristov'   }
+};
 
-function setLang(l) {
-  lang = l;
-  localStorage.setItem('mm_lang', l);
-  document.querySelectorAll('.lang-btn').forEach((b,i) => b.classList.toggle('on', (i===0&&l==='mk')||(i===1&&l==='en')));
-  document.querySelectorAll('[data-mk]').forEach(el => {
-    el.textContent = l === 'mk' ? el.dataset.mk : el.dataset.en;
-  });
-  document.querySelectorAll('[data-mk-ph]').forEach(el => {
-    el.placeholder = l === 'mk' ? el.dataset.mkPh : el.dataset.enPh;
-  });
-  document.querySelector('html').lang = l;
-  // re-render dynamic parts
-  renderSopts();
-  if (document.getElementById('calTitle').textContent) renderCal();
+/* ── ROUTING ── */
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  // Update nav active link
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('on'));
+  if (page === 'home') document.querySelector('.nav-link').classList.add('on');
 }
 
-// ── STORAGE ──
-const BK='mm_bk_v4', SK='mm_sk_v4';
-function getBk(){try{return JSON.parse(localStorage.getItem(BK))||seedBk();}catch{return seedBk();}}
-function setBk(d){try{localStorage.setItem(BK,JSON.stringify(d));}catch{}}
-function getSk(){try{return JSON.parse(localStorage.getItem(SK))||defSk();}catch{return defSk();}}
-function setSk(d){try{localStorage.setItem(SK,JSON.stringify(d));}catch{}}
-
-function defSk(){return{Monday:{on:true,slots:['09:00','10:00','11:00','14:00','15:00','16:00']},Tuesday:{on:true,slots:['09:00','10:00','17:00','18:00']},Wednesday:{on:true,slots:['10:00','11:00','14:00','15:00']},Thursday:{on:true,slots:['09:00','10:00','16:00','17:00']},Friday:{on:true,slots:['09:00','10:00','11:00']},Saturday:{on:false,slots:['10:00','11:00']},Sunday:{on:false,slots:[]}};}
-function seedBk(){const f=d=>d.toISOString().split('T')[0];const n=new Date(),d1=new Date(n),d2=new Date(n),d3=new Date(n);d1.setDate(n.getDate()+2);d2.setDate(n.getDate()+5);d3.setDate(n.getDate()-3);return[{id:1,name:'Ана Петровска',subject:'Алгебра и геометрија',date:f(d1),time:'10:00',format:'Онлајн',email:'ana@ex.com',phone:'070 111 222',notes:'',status:'confirmed'},{id:2,name:'Никола Стојановски',subject:'Математичка анализа',date:f(d2),time:'14:00',format:'Во живо',email:'nikola@ex.com',phone:'071 333 444',notes:'',status:'new'},{id:3,name:'Мила Иванова',subject:'Подготовка за испит',date:f(d3),time:'11:00',format:'Онлајн',email:'mila@ex.com',phone:'',notes:'',status:'confirmed'}];}
-
-// ── ROUTING ──
-function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
-function goAdmin(){showPage('pg-login');}
-
-// ── LOGIN ──
-async function tryLogin(){
-  const pw=document.getElementById('apw').value;
-  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(pw));
-  const hex=[...new Uint8Array(buf)].map(x=>x.toString(16).padStart(2,'0')).join('');
-  if(hex==='d3add36af47d51c8ac8792965da8c05093da64e651ee6117c93a66d76ceffc0a'){showPage('pg-admin');initAdmin();}
-  else{document.getElementById('loginErr').style.display='block';}
+function showDetail(id) {
+  const c = cars[id];
+  document.getElementById('detailName').textContent = c.name;
+  document.getElementById('detailPrice').textContent = c.price;
+  document.getElementById('sbPrice').textContent = c.price;
+  document.getElementById('breadcrumbName').textContent = c.name;
+  document.getElementById('dYear').textContent = c.year;
+  document.getElementById('dKm').textContent = c.km;
+  document.getElementById('dFuel').textContent = c.fuel;
+  document.getElementById('dTrans').textContent = c.trans;
+  document.getElementById('sMake').textContent = c.make;
+  document.getElementById('sModel').textContent = c.model;
+  document.getElementById('vendorAvatar').textContent = c.av;
+  document.getElementById('vendorName').textContent = c.vn;
+  galIdx = 0;
+  document.getElementById('galCount').textContent = '1 / 3';
+  document.querySelectorAll('.thumb').forEach((t,i) => t.classList.toggle('on', i === 0));
+  showPage('detail');
 }
 
-// ── ADMIN ──
-let aBk=[],aSk={};
-function initAdmin(){aBk=getBk();aSk=getSk();renderStats();renderTable();renderBuilder();}
-function aTab(name,btn){document.querySelectorAll('.admin-sec').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.a-tab').forEach(b=>b.classList.remove('on'));document.getElementById('tab-'+name).classList.add('on');btn.classList.add('on');}
-
-function renderStats(){
-  const now=new Date();
-  const tot=aBk.length,up=aBk.filter(b=>new Date(b.date+'T'+b.time)>=now).length,nw=aBk.filter(b=>b.status==='new').length,cf=aBk.filter(b=>b.status==='confirmed').length;
-  document.getElementById('aStats').innerHTML=`
-    <div class="stat-card"><div class="stat-n">${tot}</div><div class="stat-l">Вкупно резервации</div></div>
-    <div class="stat-card"><div class="stat-n">${up}</div><div class="stat-l">Претстојни</div></div>
-    <div class="stat-card"><div class="stat-n red">${nw}</div><div class="stat-l">Чекаат потврда</div></div>
-    <div class="stat-card"><div class="stat-n">${cf}</div><div class="stat-l">Потврдени</div></div>`;
+/* ── GALLERY ── */
+let galIdx = 0;
+function galNav(dir) {
+  galIdx = (galIdx + dir + 3) % 3;
+  document.getElementById('galCount').textContent = (galIdx+1) + ' / 3';
+  document.querySelectorAll('.thumb').forEach((t,i) => t.classList.toggle('on', i === galIdx));
+}
+function selectThumb(idx, el) {
+  galIdx = idx;
+  document.getElementById('galCount').textContent = (idx+1) + ' / 3';
+  document.querySelectorAll('.thumb').forEach(t => t.classList.remove('on'));
+  el.classList.add('on');
 }
 
-function renderTable(){
-  const DN=['Нед','Пон','Вто','Сре','Чет','Пет','Саб'],MN=['Јан','Фев','Мар','Апр','Мај','Јун','Јул','Авг','Сеп','Окт','Ное','Дек'];
-  const fd=s=>{const d=new Date(s+'T12:00');return`${DN[d.getDay()]} ${d.getDate()} ${MN[d.getMonth()]}`;};
-  document.getElementById('bTable').innerHTML=[...aBk].sort((a,b)=>new Date(b.date+'T'+b.time)-new Date(a.date+'T'+a.time)).map(b=>`
-    <tr>
-      <td style="color:#999;font-size:.74rem;">#${b.id}</td>
-      <td><strong>${b.name}</strong></td>
-      <td>${b.subject}</td>
-      <td>${fd(b.date)} · <strong>${b.time}</strong></td>
-      <td>${b.format}</td>
-      <td style="font-size:.78rem;">${b.email||'—'}<br><span style="color:#999">${b.phone||''}</span></td>
-      <td><span class="badge b-${b.status}">${b.status==='new'?'Ново':b.status==='confirmed'?'Потврдено':'Откажано'}</span></td>
-      <td>
-        ${b.status==='new'?`<button class="act" onclick="setStatus(${b.id},'confirmed')">✓ Потврди</button>`:''}
-        ${b.status!=='cancelled'?`<button class="act del" onclick="setStatus(${b.id},'cancelled')">✕ Откажи</button>`:''}
-      </td>
-    </tr>`).join('');
+/* ── HEART ── */
+function toggleHeart(btn) {
+  btn.classList.toggle('on');
+  btn.textContent = btn.classList.contains('on') ? '♥' : '♡';
 }
 
-function setStatus(id,s){aBk=aBk.map(b=>b.id===id?{...b,status:s}:b);setBk(aBk);renderStats();renderTable();}
-
-function exportCSV(){
-  const h=['ID','Име','Предмет','Датум','Час','Формат','Е-пошта','Телефон','Напомени','Статус'];
-  const csv=[h,...aBk.map(b=>[b.id,b.name,b.subject,b.date,b.time,b.format,b.email,b.phone,b.notes,b.status])].map(r=>r.map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
-  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='mathmagic-rezervacii.csv';a.click();
+/* ── TOGGLE SWITCH ── */
+function toggleSw(el) {
+  el.classList.toggle('on');
+  el.classList.toggle('off');
 }
 
-function renderBuilder(){
-  const DAYS=[{en:'Monday',mk:'Понеделник'},{en:'Tuesday',mk:'Вторник'},{en:'Wednesday',mk:'Среда'},{en:'Thursday',mk:'Четврток'},{en:'Friday',mk:'Петок'},{en:'Saturday',mk:'Сабота'},{en:'Sunday',mk:'Недела'}];
-  document.getElementById('schedBuilder').innerHTML=DAYS.map(({en:day,mk:dayMk})=>{
-    const d=aSk[day]||{on:false,slots:[]};
-    return`<div class="day-card">
-      <div class="day-top"><div class="day-name">${dayMk}</div><button class="tog ${d.on?'on':''}" onclick="togDay('${day}')"></button></div>
-      ${d.on?`<div class="slot-chips">${d.slots.map(s=>`<div class="slot-chip">${s}<button class="chip-rm" onclick="rmSlot('${day}','${s}')">×</button></div>`).join('')}</div>
-      <div class="day-add"><input type="time" id="ti-${day}" value="09:00"/><button onclick="addSlot('${day}')">+ Додај</button></div>`:`<div class="day-off">Недостапно</div>`}
-    </div>`;
-  }).join('');
-  renderPreview();
+/* ── EQUIPMENT TAG ── */
+function toggleEtag(el) { el.classList.toggle('on'); }
+
+/* ── SUBMIT ── */
+function handleSubmit(btn) {
+  btn.textContent = '✅ Listing Published!';
+  btn.style.background = '#16a34a';
+  setTimeout(() => { btn.textContent = '🚀 Publish Listing'; btn.style.background = ''; }, 2800);
 }
-function togDay(d){aSk[d].on=!aSk[d].on;setSk(aSk);wSk=aSk;renderBuilder();}
-function addSlot(d){const t=document.getElementById('ti-'+d).value;if(!t||aSk[d].slots.includes(t))return;aSk[d].slots.push(t);aSk[d].slots.sort();setSk(aSk);wSk=aSk;renderBuilder();}
-function rmSlot(d,s){aSk[d].slots=aSk[d].slots.filter(x=>x!==s);setSk(aSk);wSk=aSk;renderBuilder();}
-
-function renderPreview(){
-  const DAYS=[{en:'Monday',mk:'Понеделник'},{en:'Tuesday',mk:'Вторник'},{en:'Wednesday',mk:'Среда'},{en:'Thursday',mk:'Четврток'},{en:'Friday',mk:'Петок'},{en:'Saturday',mk:'Сабота'},{en:'Sunday',mk:'Недела'}];
-  const DNI={Monday:1,Tuesday:2,Wednesday:3,Thursday:4,Friday:5,Saturday:6,Sunday:0};
-  const MN=['Јан','Фев','Мар','Апр','Мај','Јун','Јул','Авг','Сеп','Окт','Ное','Дек'];
-  const now=new Date();let html='';
-  DAYS.forEach(({en:day,mk:dayMk})=>{
-    const d=aSk[day];if(!d||!d.on||!d.slots.length)return;
-    const diff=(DNI[day]-now.getDay()+7)%7||7;
-    const dt=new Date(now);dt.setDate(now.getDate()+diff);
-    html+=`<div class="prev-day"><div class="prev-day-name">${dayMk} · ${dt.getDate()} ${MN[dt.getMonth()]}</div>
-    <div class="prev-slots">${d.slots.map(s=>`<span class="prev-slot">${s}</span>`).join('')}</div></div>`;
-  });
-  document.getElementById('schedPreview').innerHTML=html||'<p style="font-size:.84rem;color:#999;">Нема активни денови.</p>';
-}
-
-// ── PRICING ──
-function switchLevel(level, btn) {
-  document.querySelectorAll('.ptab').forEach(b => b.classList.remove('on'));
-  btn.classList.add('on');
-  document.getElementById('pl-elem').style.display = level === 'elem' ? 'grid' : 'none';
-  document.getElementById('pl-high').style.display = level === 'high' ? 'grid' : 'none';
-}
-
-// ── WIDGET ──
-const SUBJS_MK=[
-  {icon:'🔢',name:'Аритметика и основи',lvl:'Сите возрасти'},
-  {icon:'📐',name:'Алгебра и геометрија',lvl:'Средно училиште'},
-  {icon:'∫', name:'Математичка анализа',lvl:'Универзитет'},
-  {icon:'📊',name:'Статистика и веројатност',lvl:'Средно и универзитет'},
-  {icon:'🧮',name:'Линеарна алгебра',lvl:'Универзитет'},
-  {icon:'🎯',name:'Подготовка за испит',lvl:'Сите нивоа'},
-];
-const SUBJS_EN=[
-  {icon:'🔢',name:'Arithmetic & Foundations',lvl:'All ages'},
-  {icon:'📐',name:'Algebra & Geometry',lvl:'Middle & High school'},
-  {icon:'∫', name:'Calculus & Analysis',lvl:'University level'},
-  {icon:'📊',name:'Statistics & Probability',lvl:'High school & Uni'},
-  {icon:'🧮',name:'Linear Algebra',lvl:'University level'},
-  {icon:'🎯',name:'Exam Preparation',lvl:'All levels'},
-];
-
-const WDAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-const MONTHS_MK=['Јануари','Februari','Март','Април','Мај','Јуни','Јули','Август','Септември','Октомври','Ноември','Декември'];
-const MONTHS_EN=['January','February','March','April','May','June','July','August','September','October','November','December'];
-const WD_MK=['Нед','Пон','Вто','Сре','Чет','Пет','Саб'];
-const WD_EN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-
-let selSubj='',selDate='',selTime='',selFmt='';
-let calY=new Date().getFullYear(),calM=new Date().getMonth();
-let wSk={},wBk=[];
-
-function initWidget(){wSk=getSk();wBk=getBk();renderSopts();renderCal();}
-
-function renderSopts(){
-  const SUBJS=lang==='mk'?SUBJS_MK:SUBJS_EN;
-  document.getElementById('soptGrid').innerHTML=SUBJS.map(s=>`
-    <div class="sopt ${selSubj===s.name?'on':''}" onclick="pickSubj(this,'${s.name}')">
-      <span class="so-icon">${s.icon}</span>
-      <div><div class="so-name">${s.name}</div><div class="so-lvl">${s.lvl}</div></div>
-    </div>`).join('');
-}
-
-function pickSubj(el,name){
-  document.querySelectorAll('.sopt').forEach(e=>e.classList.remove('on'));
-  el.classList.add('on');selSubj=name;
-  document.getElementById('s1btn').disabled=false;
-  document.getElementById('wlSel').style.display='block';
-  document.getElementById('wlSubj').textContent=name;
-  document.getElementById('wlTime').textContent='';
-}
-
-function goStep(n){
-  document.querySelectorAll('.wstep').forEach(s=>s.classList.remove('active'));
-  document.getElementById('ws'+n).classList.add('active');
-  for(let i=0;i<3;i++)document.getElementById('pd'+i).classList.toggle('on',i<n-1);
-  if(n===2)renderCal();
-}
-
-function shiftMonth(d){calM+=d;if(calM<0){calM=11;calY--;}if(calM>11){calM=0;calY++;}renderCal();}
-
-function bookedMap(){const m={};getBk().filter(b=>b.status!=='cancelled').forEach(b=>{if(!m[b.date])m[b.date]=[];m[b.date].push(b.time);});return m;}
-
-function renderCal(){
-  const MONTHS=lang==='mk'?MONTHS_MK:MONTHS_EN;
-  const WDS=lang==='mk'?WD_MK:WD_EN;
-  document.getElementById('calTitle').textContent=`${MONTHS[calM]} ${calY}`;
-  const today=new Date();today.setHours(0,0,0,0);
-  const firstDow=new Date(calY,calM,1).getDay();
-  const dim=new Date(calY,calM+1,0).getDate();
-  let html=WDS.map(d=>`<div class="cal-wd">${d}</div>`).join('');
-  for(let i=0;i<firstDow;i++)html+=`<div class="cday"></div>`;
-  for(let d=1;d<=dim;d++){
-    const dt=new Date(calY,calM,d);
-    const ds=`${calY}-${String(calM+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const dn=WDAYS[dt.getDay()];
-    const sc=wSk[dn];
-    const past=dt<today;
-    const avail=sc&&sc.on&&sc.slots.length>0&&!past;
-    const isSel=ds===selDate;
-    const isToday=dt.getTime()===today.getTime();
-    let cls='cday';
-    if(past)cls+=' past';else if(avail)cls+=' avail';
-    if(isSel)cls+=' sel';
-    if(isToday&&!isSel)cls+=' today';
-    html+=`<div class="${cls}"${avail?` onclick="pickDate('${ds}','${dn}')"`:''}>${d}</div>`;
-  }
-  document.getElementById('calGrid').innerHTML=html;
-  if(selDate)renderTimes(selDate,WDAYS[new Date(selDate+'T12:00').getDay()]);
-}
-
-function pickDate(ds,dn){selDate=ds;selTime='';document.getElementById('s2btn').disabled=true;document.getElementById('wlTime').textContent='';renderCal();renderTimes(ds,dn);}
-
-function renderTimes(ds,dn){
-  const sc=wSk[dn]||{slots:[]};const bk=bookedMap()[ds]||[];
-  document.getElementById('timeSec').style.display='block';
-  document.getElementById('timeGrid').innerHTML=sc.slots.map(t=>`<button class="tslot${bk.includes(t)?' taken':''}${t===selTime?' on':''}" ${bk.includes(t)?'disabled':''} onclick="pickTime(this,'${t}')">${t}</button>`).join('');
-}
-
-function pickTime(el,t){
-  document.querySelectorAll('.tslot').forEach(b=>b.classList.remove('on'));
-  el.classList.add('on');selTime=t;
-  document.getElementById('s2btn').disabled=false;
-  const d=new Date(selDate+'T12:00');
-  const opts={weekday:'short',month:'short',day:'numeric'};
-  const loc=lang==='mk'?'mk-MK':'en-GB';
-  document.getElementById('wlTime').textContent=`${d.toLocaleDateString(loc,opts)} · ${t}`;
-}
-
-function pickFmt(el,f){document.querySelectorAll('.fopt').forEach(e=>e.classList.remove('on'));el.classList.add('on');selFmt=f;}
-
-function submitBooking(){
-  const fn=document.getElementById('ff').value.trim();
-  const ln=document.getElementById('fl').value.trim();
-  const em=document.getElementById('fe').value.trim();
-  if(!fn||!ln||!em){alert(lang==='mk'?'Ве молиме внесете го вашето име и е-пошта.':'Please fill in your name and email.');return;}
-  const all=getBk();
-  const id=all.length?Math.max(...all.map(b=>b.id))+1:1;
-  const bk={id,name:`${fn} ${ln}`,subject:selSubj,date:selDate,time:selTime,format:selFmt,email:em,phone:document.getElementById('fp').value.trim(),notes:document.getElementById('fn2').value.trim(),status:'new',createdAt:new Date().toISOString()};
-  all.push(bk);setBk(all);wBk=all;
-  const loc=lang==='mk'?'mk-MK':'en-GB';
-  const dl=new Date(selDate+'T12:00').toLocaleDateString(loc,{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-  const labels=lang==='mk'?{subj:'Предмет',date:'Датум',time:'Час',fmt:'Формат',name:'Име'}:{subj:'Subject',date:'Date',time:'Time',fmt:'Format',name:'Name'};
-  document.getElementById('cbox').innerHTML=`
-    <div class="crow"><span class="ck">${labels.subj}</span><span class="cv">${selSubj}</span></div>
-    <div class="crow"><span class="ck">${labels.date}</span><span class="cv">${dl}</span></div>
-    <div class="crow"><span class="ck">${labels.time}</span><span class="cv">${selTime}</span></div>
-    <div class="crow"><span class="ck">${labels.fmt}</span><span class="cv">${selFmt}</span></div>
-    <div class="crow"><span class="ck">${labels.name}</span><span class="cv">${bk.name}</span></div>`;
-  goStep(4);
-  document.querySelectorAll('.w-pd').forEach(p=>p.classList.add('on'));
-}
-
-function resetWidget(){
-  selSubj='';selDate='';selTime='';selFmt='';
-  calY=new Date().getFullYear();calM=new Date().getMonth();
-  document.getElementById('wlSel').style.display='none';
-  document.getElementById('s1btn').disabled=true;
-  document.getElementById('s2btn').disabled=true;
-  document.getElementById('timeSec').style.display='none';
-  document.querySelectorAll('.fopt').forEach((e,i)=>e.classList.toggle('on',i===0));
-  ['ff','fl','fe','fp','fn2'].forEach(id=>document.getElementById(id).value='');
-  goStep(1);renderSopts();
-}
-
-// REVEAL
-document.querySelectorAll('.reveal').forEach(el=>new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:0.1}).observe(el));
-
-// INIT
-setLang(lang);
-initWidget();
 </script>
 
 </body>
